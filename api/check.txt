@@ -1,0 +1,19 @@
+
+{"email":"leon@vlw2.com","password":"password"}05-08-48
+{"email":"leon@vlw2.com","password":"password"}05-08-12
+{"email":"leon@vlw2.com","password":"password"}05-08-55
+{"email":"leon@vlw2.com","password":"ee39c6a7d8c8bc5c136a437e52570026"}05-08-22
+{"email":"leon@vlw2.com","password":"ee39c6a7d8c8bc5c136a437e52570026"}05-08-46
+{"email":"leon@vlw2.com","password":"1ac87f8b55f0a6712cadd9c0432c2716"}05-08-48
+{"email":"leon@vlw2.com","password":"1ac87f8b55f0a6712cadd9c0432c2716"}05-08-27
+{"email":"leon@vlw2.com","password":"ee39c6a7d8c8bc5c136a437e52570026"}06-08-10
+{"email":"leon@vlw2.com","password":"1ac87f8b55f0a6712cadd9c0432c2716"}06-08-40
+{"email":"leon@vlw2.com","password":"1ac87f8b55f0a6712cadd9c0432c2716"} 06-08-06
+{"email":"leon@vlw2.com","password":"1ac87f8b55f0a6712cadd9c0432c2716"} 06-10-47
+[{"name":"Leon","facebook_id":"","is_admin":"1","id":"27","birthday":null,"signup_date":"2016-08-07"}] 06-11-57
+[{"name":"Leon","password":"1ac87f8b55f0a6712cadd9c0432c2716","facebook_id":"","is_admin":"1","id":"27","birthday":null,"signup_date":"2016-08-07"}]
+{"name":"Leon","password":"1ac87f8b55f0a6712cadd9c0432c2716","facebook_id":"","is_admin":"1","id":"27","birthday":null,"signup_date":"2016-08-07"}
+{"name":"Leon","password":"1ac87f8b55f0a6712cadd9c0432c2716","facebook_id":"","is_admin":"1","id":"27","birthday":null,"signup_date":"2016-08-07"}
+{"name":"Leon","password":"1ac87f8b55f0a6712cadd9c0432c2716","facebook_id":"","is_admin":"1","id":"27","birthday":null,"signup_date":"2016-08-07"}
+{"name":"Leon","password":"1ac87f8b55f0a6712cadd9c0432c2716","facebook_id":"","is_admin":"1","id":"27","birthday":null,"signup_date":"2016-08-07"}
+false

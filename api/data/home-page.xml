@@ -1,0 +1,10 @@
+<homePage title="Juggling and Flow Arts">
+	<parts>
+		<our-mission title="Our Mission"
+			text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate quas nesciunt voluptatum, eveniet sequi consequatur! Maiores minima nisi explicabo nam, blanditiis ullam, optio et autem dicta, eaque rem repellendus a!"
+		/>
+		<how title="How We Do It"
+			text="How we do stuff."
+		/>
+	</parts>
+</homePage>
