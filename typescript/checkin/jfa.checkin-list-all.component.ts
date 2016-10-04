@@ -6,7 +6,7 @@ import {MemberInfoComponent} from './';
 @Component({
 	selector: 'checkin-list-all',
 	template: `
-		<div class="card">
+		
 			
 	      <div *ngIf="checkIns?.length > 0">
 	        <h3>{{title}}</h3>
@@ -18,7 +18,7 @@ import {MemberInfoComponent} from './';
 	      </div>
 	      <h3 *ngIf="checkIns?.length <= 0" class="text-center">No Check Ins Yet <i class="fa fa-smile-o"></i>!</h3>
 
-		</div>
+	
 			
 			`,
   directives: [MemberInfoComponent],

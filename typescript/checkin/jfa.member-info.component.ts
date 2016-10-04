@@ -6,10 +6,11 @@ import {CheckInService} from '../services';
 @Component({
 	selector: 'member-info',
 	template: `
-			<display-member-info *ngIf="member && !editing" (click)="toggleEditing(true)" [member]="member"></display-member-info>
+			<display-member-info *ngIf="member && !editing" (click)="toggleEditing(true)" [checkIn]="member"></display-member-info>
 			<edit-member-info *ngIf="editing" (update)="updateMemberInfo($event)" (cancel)="toggleEditing(false)" [member]="member"></edit-member-info>
 			`,
   directives: [DisplayMemberInfoComponent, MemberInfoFormComponent],
+  styleUrls:['style/css/member-list.css']
 })
 
 export class MemberInfoComponent {
@@ -17,11 +18,8 @@ export class MemberInfoComponent {
 	private editing:boolean = false;
 
 	ngOnInit(){
-
 	}
-	ngOnChanges(){
-		console.log(this.member);
-	}
+	
 	toggleEditing(bool){
 		this.editing = bool;
 	}

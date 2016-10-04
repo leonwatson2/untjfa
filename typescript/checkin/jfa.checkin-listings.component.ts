@@ -11,9 +11,10 @@ import {JfaEvent, JfaEventGroup, DefinedEvent} from '../classes/Event';
 	selector: 'checkin-listings',
 	template: `
 		<div class="checkin-listing-container">
-			<checkin-list-all *ngIf="allCheckIns"></checkin-list-all>
+			<checkin-list-all *ngIf="allCheckIns" class="card"></checkin-list-all>
 			<h2 *ngIf="eventGroups.length > 0 && !eventChosen ">Choose An Event</h2>
 			<button (click)="showAllCheckIns()">Show all check ins</button>
+			
 			<template ngFor let-eventGroup [ngForOf]="eventGroups" [ngForTrackBy]="title">
 		      <h2 *ngIf="eventGroup.events.length" class="text-center">{{eventGroup.title}}</h2>
 				<div class="event-list-buttons">
@@ -25,6 +26,7 @@ import {JfaEvent, JfaEventGroup, DefinedEvent} from '../classes/Event';
 			      </template>
 				</div>
 		    </template>
+		
 		</div>
 			<checkin-list class="main" *ngIf="eventChosen" [event]="chosenEvent"></checkin-list>
 			`,
@@ -68,7 +70,6 @@ export class CheckInListingsComponent {
   	this.allCheckIns = false;
   }
   showAllCheckIns(){
-  	console.log("Shoe");
   	this.eventChosen = false;
   	this.allCheckIns = true;
   }
