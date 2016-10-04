@@ -1,0 +1,7 @@
+.input-group{
+	width: 100%;
+	height: auto;
+	@include MQ(M){
+		width: 48%;
+	}
+}

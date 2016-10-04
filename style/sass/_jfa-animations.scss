@@ -1,0 +1,45 @@
+
+.spin-360{
+  @include animation( spin .75s $ease-out-back .8s 1);
+}
+
+.fade-in{
+  @include animation( fade-in .7s ease-in 0s 1);	
+
+}
+
+.spin{
+  @include transform(rotateZ(-360deg));
+  
+}
+.beat-font{
+  @include animation(beat-font .5s infinite alternate);
+}
+
+
+@include keyframes (spin){
+  from{
+    @include transform(rotateZ(-360deg));
+  }
+  to{
+    @include transform(rotateZ(0deg));
+
+  }
+}
+
+@include keyframes (fade-in){
+	from{
+		opacity: 0;
+	}
+	to{
+		opacity: 1;
+	}
+}
+@include keyframes (beat-font){
+  from{
+     font-size: inherit;;
+  }
+  to{
+     font-size: 1.1em;
+  }
+}

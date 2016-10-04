@@ -1,0 +1,94 @@
+@import "bourbon/bourbon";
+@import "bootstrap/variables";
+@import "variables";
+@import '../partials/layout'; // responsive grid and media queries
+
+html, body{
+	background:#eee;
+}
+
+.container{
+	background:#fff;
+	height: 100%;
+	width: auto;
+	margin: 10px 15px;
+	margin-bottom: 50px;
+	padding: 0;
+}
+p{
+
+}
+img{
+	height: auto;
+	width: 100%;
+}
+.nav-container{
+	background:$brand-primary;
+	@include display(flex);
+	@include flex-direction(row);
+	@include align-items(center);
+	@include align-content(center);
+	@include justify-content(space-between);
+	padding: 5px 15px;
+	img{
+		width:100%;
+	}
+	.logo{
+	    max-height:80%;
+	    max-width: 15%; 
+	}
+	h1{
+		padding: 0;
+		margin: 0;
+	}
+}//.nav-container
+	
+.message{
+	padding: 15px;
+}
+#footer{
+	margin-top: 100px;
+	margin-right: 0;
+	margin-left: 0;
+	margin-bottom: 0;
+	min-height:100px;
+	padding: 10px;
+	@include background(#BF2200);
+
+	
+	ul{
+		list-style: none;
+	}
+	.links{
+		width: 100%;
+		@include display(flex);
+		@include flex-direction(column);
+		@include align-items(space-between);
+		a{
+			color:black;
+		}
+	}
+	.copyright{
+		width:100%;
+		text-align:right;
+		color:black;
+	}
+}
+
+/* Social Icons */
+.socials{
+	@include display(flex);
+	@include align-items(center);
+	@include align-content(center);
+	@include justify-content(space-around);
+	padding-left: 15px;
+	padding-right: 15px;
+	span{
+		color:white;
+		margin-right: 10px;
+		margin-bottom: 5px;
+	}
+	.social{
+		padding: 0 5px;
+	}
+}

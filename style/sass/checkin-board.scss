@@ -1,0 +1,67 @@
+@import "bourbon/bourbon";
+@import "bootstrap/variables";
+@import "../partials/layout";
+
+
+h1, h2, h3, h4, h5{
+	color:black;
+	margin-top: 0;
+	padding:5px;
+}
+
+button{
+	width: auto;
+}
+
+.name, .checkin-list{
+	color:black;
+	font-size:1.75em;
+}
+
+.checkin-list{
+	height: 100%;
+	background:$brand-primary;
+
+}
+.checkin-board{
+		@include display(flex);
+		@include flex-direction(row);
+		@include align-items(stretch);
+		@include align-content(center);
+		@include justify-content(space-between);
+		
+
+	selfie-board{
+		width: 75%;
+
+	}
+	checkin-list{
+		width: 25%;
+	}
+}
+
+.selfie-board{
+		@include display(flex);
+		@include flex-direction(row);
+		@include align-items(center);
+		@include align-content(center);
+		@include justify-content(space-around);
+		@include flex-wrap(wrap);
+		
+}
+.checkin-selfie{
+	margin-right:3px;
+	
+}
+.photo{
+	height: 300px;
+	img{
+		height: 100%;
+	}
+}
+.name{
+	padding:3px 0;
+
+}
+
+

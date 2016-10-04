@@ -1,0 +1,55 @@
+@import 'events';
+
+.checkin-listing-container{
+		@include display(flex);
+		@include flex-direction(column);
+		@include align-items(center);
+		@include align-content(center);
+		@include justify-content(space-around);
+		@include flex-wrap(wrap);
+		
+}
+
+.card{
+	@extend .event;
+	margin: 30px auto;
+}
+.event-list-buttons{
+	width: 100%;
+		@include display(flex);
+		@include flex-direction(row);
+		@include align-items(center);
+		@include align-content(center);
+		@include justify-content(center);
+		@include flex-wrap(wrap);
+		
+	button{
+		margin:5px 10px;
+	}
+}
+.members{
+		@include display(flex);
+		@include flex-direction(row);
+		@include align-items(stretch);
+		@include align-content(center);
+		@include justify-content(space-between);
+		@include flex-wrap(wrap);
+}
+.member{
+	@include transition(.35s ease-in);
+	width: 100%;
+	border:solid 2px $brand-primary;
+	@include MQ(M){
+		max-width: 25%;
+	}
+	&.editing{
+		width: 100%;
+	}
+}
+
+.info{
+	padding: 10px;
+	font-size: 1.3em;
+}
+
+

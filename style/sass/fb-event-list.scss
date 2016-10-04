@@ -1,0 +1,130 @@
+@import 'bourbon/bourbon';
+@import '../partials/layout';
+@import 'bootstrap/variables';
+
+$popupDistanceFromTop:15%;
+
+.fb-box{
+	position:static;
+	top:10px;
+	bottom: 10px;
+	left: 10px;
+	right: 10px;
+	background:white;
+	color:#101;
+}
+
+.header{
+	width: 100%;
+	border-bottom: solid 2px #010;
+}
+.list{
+	width: 100%;
+	ul{
+		padding: 0;
+		margin: 0;
+	}
+}
+ul{
+		@include display(flex);
+		@include flex-direction(row);
+		@include align-items(center);
+		@include align-content(center);
+		@include justify-content(space-between);
+		@include flex-wrap(wrap);
+		
+}
+
+li{
+	@include transition(all .3s ease-out);
+	width: 10%;
+	flex-grow:4;
+	display: inline-block;
+	font-size: 1.25em;
+    border-bottom: solid 1px gray;
+    padding: 5px 5px 5px 0;
+    &:hover{
+    	@include transform(scale(1.2));
+    }
+    img{
+    	width: 100%;
+    }
+}
+.event-info, .response{
+	@include transition(top .35s $ease-in-out-back);
+}
+.event-info{
+    background: black;
+    color: white;
+	position: fixed;
+    top: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index:40;
+    overflow-y:auto;
+    .title{
+    	padding-top: 55px;
+    }
+	&.show{
+		top:$popupDistanceFromTop;
+	}
+	.close{
+		font-size: 2em;
+		position:absolute;
+		top:8px;
+		right:8px;
+	}
+	.content{
+		@include align-items(flex-start);
+		@include align-content(flex-start);
+		@include justify-content(flex-start);
+	}
+	.photo{
+		display: none;
+		max-width: 33.33333333333%;
+		@include MQ(M){
+			display: block;
+		}		
+	} 
+	.information{
+		.date, .time{
+			padding: 5px 0;
+		}
+		font-size: 15px;
+	}
+}
+.event-info .description{
+	width: 100%;
+	font-size: 1em;
+	line-height: 1.5em;
+}
+
+
+.response{
+	top:100%;
+
+	.event-info.show &{
+		top: $popupDistanceFromTop;
+	}
+	position: fixed;
+		@include display(flex);
+		@include flex-direction(row);
+		@include align-items(flex-end);
+		@include align-content(center);
+		@include justify-content(space-between);
+		width: 100%;
+		.accept, .reject{
+			min-width: 50%;
+			color:white;
+			border:none;
+			margin: 0;
+		}
+		.accept{
+			background:$brand-success;
+		}
+		.reject{
+			background: $brand-warning;
+		}
+
+}

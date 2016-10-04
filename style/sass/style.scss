@@ -1,0 +1,249 @@
+@import "bourbon/bourbon";
+@import "fontawesome/scss/font-awesome";
+@import "bootstrap";
+@import "variables";
+@import "nav";
+@import "jfa-animations";
+
+$mainHeadings:("h1":4em, "h2":3.5em, "h3":3em, "h4":2.5em, "h5":2, "h6":1.75);
+
+
+ul{
+	padding:0;
+	list-style:none;
+}
+
+@each $heading, $fontsize in $mainHeadings{
+	#{$heading}{
+		font-size: #{$fontsize};
+	}
+
+}
+body{
+	height: 100%;
+}
+body  {
+  font-family: 'Roboto', 'Helvetica Nueue', Helvetica, Arial, sans-serif;
+  color: #555459;
+  *zoom: 1;
+}
+
+
+/*
+# Navbar
+*/
+.on-mobile{
+	@extend .hidden-xs;
+	@extend .hidden-sm;
+}
+.not-mobile{
+	@extend .hidden-md;
+	@extend .hidden-lg;
+}
+
+
+section{
+	min-height: 300px;
+	text-align: center;
+	transition: .75s ease-out;
+	.content{
+		padding:7em 2em 8em;
+		p{
+			font-size: 1.5em;
+		}
+	}
+}
+
+.cd-logo{
+	img{	
+		height:80px;
+	}
+}
+
+#home-hero{
+	height:600px;
+	background-image:url('../../references/JugFest2016.png');
+	background-size: cover;
+	
+	@include MQ(M){
+		background-image:url('../../references/JugFest2016-lg.jpg');
+		background-repeat: no-repeat;
+	}
+
+	background-position: 25%;
+	// background:url('/jfa/references/JFA-Sparklers1020x600.jpg');
+		h1{
+			width: 100%;
+			font-size: 4em;
+			color:white;
+			small{
+				display: block;
+				color:$brand-primary;
+			}
+		}
+		.content{
+			position: relative;
+			bottom: 0;
+			width: 100%;
+			clear: both;
+			height: 100%;
+			padding: 0;
+			@include display(flex);
+			@include align-content(center);
+			@include align-items(center);
+			@include justify-content(center);
+			@include flex-wrap(wrap);
+			@include MQ(M){
+				@include align-items(flex-start);
+				@include align-content(flex-start);
+			}
+		}
+		@include MQ(M){
+			&.mini-hero{
+				height: 250px;
+				.content{
+					height: 100px;
+				}
+			}
+		}
+		&.no-hero{
+			.content{
+				display: none;
+			}
+			min-height: 0;
+			height: 0;
+		}
+}
+#our-mission{
+	background: #fdfdfd;
+}
+#how{
+	@include background(linear-gradient($brand-primary, $brand-success) left);
+
+}
+
+#who{
+
+	margin-bottom: 50px;
+	.videos{
+		@include display(flex);
+		@include flex-direction(column);
+		@include align-items(center);
+		.video{
+			height: 400px;
+			margin: 40px 10px;
+			// @include background(linear-gradient($brand-primary, $brand-success) right);
+			.name{
+				font-size: 2em;
+				small{
+					color:$brand-warning;
+				}
+			}
+		}
+		video{
+			height: 100%;
+		}
+		@include MQ(L){
+			@include flex-direction(row);
+			@include justify-content(center);
+			.video{
+				height: 250px;
+			}
+		}
+	}
+}
+
+
+
+#footer{
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin-top: 100px;
+	padding-top: 10px;
+	min-height:100px;
+	@include display(flex);
+	@include align-items(center);
+	@include align-content(center);
+	@include flex-direction(column);
+
+	@include background(#BF2200);
+	@include MQ(M) {
+		padding: 5px 6%;
+		@include align-items(center);
+		@include flex-direction(row);
+		@include justify-content(space-between);
+		min-height: 80px;
+	}
+	ul{
+		list-style: none;
+		padding-left: 5px;
+	}
+	.links{
+		@include display(flex);
+		@include flex-direction(column);
+		@include MQ(M){
+			
+			@include align-items(space-around);
+		}
+		a{
+			color:black;
+		}
+	}
+	.copyright{
+		@include display(flex);
+		@include flex-direction(column);
+		@include align-content(space-around);
+		color:black;
+		margin-bottom: 20px;
+	}
+	.foot-nav{
+		@include display(flex);
+		@include align-items(center);
+		@include align-content(center);
+		@include flex-direction(row);
+		@include justify-content(center);
+		@include MQ(M){
+			@include flex-direction(row);
+		}
+		li{
+			margin:10px 10px;
+			padding: 5px 3px;
+		}
+	}
+}
+
+/* Social Icons */
+.socials{
+	@include display(flex);
+	@include align-items(center);
+	@include align-content(center);
+	@include justify-content(space-around);
+	span{
+		color:white;
+		font-size: 2em;
+		margin-right: 10px;
+		margin-bottom: 5px;
+	}
+}
+
+.badge.social{
+	text-align: center;
+	margin: 0 10px 5px 10px;
+	padding: 0px;
+	color: white;
+	transition:.1s;
+	transition-timing-function:ease-in;
+}
+.badge.social i{
+	transition:.1s;
+	transition-timing-function:ease-out;
+}
+.badge.social:hover i{
+	transform:scale(.9);
+	transition-timing-function:ease-in;
+	
+}
+.badge.social.twitter:hover{color: #55acee !important; }
+.badge.social.facebook:hover{color: #3b5998 !important; }
+.badge.social.instagram:hover{color: #517fa4 !important; }

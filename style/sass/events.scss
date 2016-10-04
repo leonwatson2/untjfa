@@ -1,0 +1,334 @@
+@import "bourbon/bourbon";
+@import "bootstrap/variables";
+@import '../partials/layout'; // custom mixins
+
+@import "fontawesome/scss/font-awesome";
+
+jfa-event-group{
+  width: 100%;
+}
+
+.main{
+  @include display(flex);
+  @include flex-direction(column); 
+  @include flex-wrap(wrap);
+  @include align-items(center);
+  @include align-content(center);
+  @include justify-content(center);
+  font-weight: 200;
+
+}
+
+.card {
+  background: white;
+  width: 100%;
+
+  padding: 10px 0px;
+  position: relative;
+  opacity: .95;
+  border-radius: 4px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 5px 10px rgba(0,0,0,.25);
+  z-index:4;
+}
+
+.title{
+  order:0;
+  width:100%;
+  text-align:center;
+  border-bottom:dashed 1px gray;
+  h3{
+    font-weight: 200;
+  }
+  input{
+    text-align:center;
+    
+  }
+}
+
+/* Signup Styles */
+
+.event {
+ 
+  width: 100%;
+  min-width: 320px;
+  margin-top: 30px;
+  padding: 20px 0px;
+  z-index: 15;
+  @include MQ(M){
+    width:80%;
+    padding: 10px;
+  }
+  &.active{
+    z-index:50;
+  }
+}
+.content{
+  margin-top: 15px;
+   @include display(flex);
+  @include flex-direction(row);
+  @include align-items(center);
+  @include justify-content(space-between);
+  @include flex-wrap(wrap);
+}
+.information{
+  line-height:1;
+  font-size:2.0em;
+  padding:10px;
+  @include display(flex);
+  @include align-items(flex-start);
+  @include flex-direction(column);
+  @include flex-wrap(wrap);
+  @include MQ(M){
+    width:50%;
+    order:2;
+    &>div{
+  font-size:1.5em;
+      padding:25px 0;
+      
+    }
+  }
+
+}
+.deleting{
+  
+  position: relative;
+  animation:leave 1.5s ease-in;
+  transform: rotateY(180deg);
+  left:100%;
+  backface-visibility:hidden;
+}
+@keyframes leave {
+  0%{
+    left:0;
+  transform: rotateY(0deg);
+
+  }
+  50%{
+    left:0;
+  transform: rotateY(180deg);
+  transform-style:perserve-3d;
+    
+  }
+  100%{
+  transform: rotateY(180deg);
+    left:-100%;
+  }
+}
+
+
+.edit-button{
+  perspective:600px;
+  border:none;
+  min-width: auto;
+  height: auto;
+  
+  i{
+    position:absolute;
+    @include transition(transform .75s);
+    @include transform(rotateY(-180deg));
+    @include transform-style(perserve-3d);
+    @include backface-visibility(hidden);
+    &.show{
+    @include transform(rotateY(0deg));
+    }
+  }
+}
+.notify{
+  @include transition(all .75s);
+  position:absolute;
+  top:0;
+  left:0;
+  opacity: 0;
+  width: 100%;
+  text-align: center; 
+  font-size: 1.75em;
+  span{
+    color:white;
+    padding:5px 10px;
+    background: $brand-success;
+  }
+}
+.show{
+  opacity: 1;
+}
+.time{
+  margin: 10px 0;
+}
+.start-time, .end-time{
+  display:inline-block;
+}
+.photo{
+  width: 100%;
+  img{
+    width: 100%;
+  }
+  @include MQ(M){
+    width: 50%;
+    order:1;
+  }
+}
+.description{
+  font-size:1.2em;
+  margin:10px 0;
+  @include MQ(M){
+    order:3;
+    width:50%;
+    padding:25px 0;
+    font-size:2em;
+  }
+}
+
+.type{
+  position: absolute;
+  right:-1px;
+  top:5px;
+  padding: 5px;
+  background:$brand-primary;
+  color:#efe;
+  width: auto;
+  height:50;
+  border-radius:2px 0 0 2px;
+  @include MQ(M){
+    font-size:1.5em;
+    top:10px;
+  }
+}
+.delete{
+  @extend .type;
+  background:$brand-warning;
+  cursor:pointer;
+}
+.delete:focus{
+  border:solid 2px $brand-primary;
+}
+.footer{
+  @include display(flex);
+  @include flex-direction(row);
+  @include align-items(center);
+  @include justify-content(space-between);
+  border-top: dashed 1px gray;
+  padding-top:10px;
+  padding-left:10px;
+  padding-right:10px;
+}
+.share{
+  margin-right: 10px;
+  margin-left: auto;
+}
+h1 {
+  margin-bottom: 10px;
+}
+
+
+input, button{
+  background:transparent;
+  max-width:100%;
+  height: 55px;
+  display: inline-block;
+  font-weight: 100;
+  padding: 0px;
+  margin: 5px 0;
+  font-size: .75em;
+  color: #475B62;
+  border:none;
+  border-bottom: 1px solid #C5C5C5;
+  border-radius: 0px;
+  outline: 0;
+  @include transition(all .5s);
+  @include MQ(M){
+    min-width: 200px;
+  }
+}
+input[type="file"]{
+  min-width: auto;
+  height: auto;
+  border:none;
+}
+
+.time, .location{
+    @include display(flex);
+    @include flex-direction(row);
+    @include align-items(center);
+    @include align-content(center);
+    @include justify-content(flex-start);
+    i{
+      margin-right: 5px;
+    }
+    input[type="time"]{
+      border: none;
+    }
+    width: 100%;
+}
+
+
+/*Checkboxes*/
+.radio-group{
+  @include display(flex);
+  @include flex-wrap(wrap);
+  @include justify-content(center);
+}
+.radio-group div{
+  width: 33%;
+}
+.radio-group .Everything{
+  width: 100%;
+  
+}
+.Everything input[type="radio"]+label{
+  width: 100%;
+}
+
+label:focus{
+  outline: none;
+}
+
+input[type="radio"]{
+  display:none;
+}
+
+input[type="radio"]+label{
+  background:white;
+  color:black;
+  @include display(flex);
+  @include align-items(center);
+  @include justify-content(center);
+  width: 98%;
+  height: 50px;
+  margin:2px 4px;
+  padding:2px 5px;
+  border:solid 1px #c5c5c5;
+  @include transition(all .35s);
+}
+
+input[type="radio"]+label:hover,
+{
+  background:#0245E9;
+}
+
+$radio-backgrounds:(#02b1d9:1, #e14d05:2, #295cdb:3);
+
+@each $color,$num in $radio-backgrounds{
+  .radio-group div:nth-of-type(#{$num}n) label:hover,
+  .radio-group div:nth-of-type(#{$num}n) label.active{
+    background:$color
+  }
+} 
+
+input[type="radio"]:checked+label{
+  @include transition(all .75s);
+  background:#295CDB;
+  color:white;
+  
+}
+.save input[type="submit"]{
+  font-size: 1.25em;
+}
+.save:hover input[type="submit"]{
+  background:#02b1d9;
+  border:solid 2px darken(#02b1d9, 10%);
+}
+.confirm button{
+  background:#bf2200;
+}
+

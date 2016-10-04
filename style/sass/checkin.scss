@@ -1,0 +1,264 @@
+@import "bourbon/bourbon";
+@import "bootstrap/variables";
+@import "../partials/layout";
+@import "jfa-forms";
+*{
+  color:white;
+}
+
+input , button{
+  width: 98%;
+  min-height: 50px;
+  display: block;
+  font-weight: 100;
+  padding: 10px;
+  margin: 5px auto;
+  font-size: 1.3em;
+  color: #010;
+  border: 1px solid #C5C5C5;
+  border-radius: 0px;
+  outline: 0;
+  @include transition(all .5s);
+
+}
+.message{
+  width: 100%;
+  text-align: center;
+}
+.check-in-form{
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  @include display(flex);
+  @include flex-direction(row);
+  @include align-items(center);
+  @include align-content(center);
+  @include justify-content(center);
+  @include flex-wrap(wrap);
+  @include MQ(M){
+    left:25%;
+    width: 50%;
+  }
+}
+label{
+  color:white;
+  margin:5px;
+}
+.close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color:white;
+  cursor: pointer;
+}
+.check-in{
+  clear: both;
+  width: 100%;
+  @include display(flex);
+  @include flex-direction(column);
+  @include align-items(center);
+  @include justify-content(space-between);
+
+  @include MQ(M){
+    @include flex-direction(row);
+  }
+
+}
+
+.check-in-submit{
+    @include transition(all .75s);
+    @include display(flex);
+    @include flex-direction(row);
+    @include align-items(center);
+    @include align-content(center);
+    @include justify-content(center);
+    min-height: 60px;
+    
+
+  @extend .check-in-button;
+  .do &{
+    width: 98%;
+    font-size: 2em;
+  }
+}
+
+.check-in-button{
+  background: $brand-primary;
+  color:white;
+  width: 150px;
+  
+}
+
+.checked-in-button{
+  @extend .check-in-button;
+  .fa{
+
+    @include transition(all .75s $ease-out-back);
+  }
+}
+.hide{
+  opacity: 0;
+}
+
+.do{
+  background:rgba(0,0,0,.7);
+  position: fixed;
+  padding: 10px auto;
+  top:1%;
+  bottom:auto;
+  left:1%;
+  z-index: 3000;
+  right:auto;
+  margin: 0 ;
+  width: 98%;
+  height: 98%;
+  @include transition(all .5s);
+  overflow-y:auto; 
+}
+
+.remember{
+  .fa{
+    font-size: 3em;
+  }
+}
+
+input[type="checkbox"]{
+  display:none;
+}
+
+input[type="checkbox"] + label{
+  cursor:pointer;
+  background:$brand-warning;
+  @include display(flex);
+  @include align-items(center);
+  @include justify-content(space-around);
+  width: 98%;
+  height: 50px;
+  margin:2px 4px;
+  padding:2px 5px;
+  border:solid 1px #c5c5c5;
+  @include transition(all .35s);
+}
+input[type="checkbox"]:checked+label{
+  @include transition(all .75s);
+  
+    background:$brand-success
+  
+  
+}
+
+
+input[type="radio"]{
+  display:none;
+}
+
+input[type="radio"]+label{
+  @include transition(all .75s);
+  background:transparent;
+  @include display(flex);
+  @include align-items(center);
+  @include align-content(flex-end);
+  @include justify-content(center);
+  @include flex-direction(column);
+  width: 98%;
+  min-height: 50px;
+  margin:5px 4px;
+  padding:2px 5px;
+  @include transition(all .35s);
+}
+.t-shirt-sizes{
+  margin-top: 10px;
+    @include display(flex);
+    @include flex-direction(row);
+    @include align-items(flex-end);
+    @include align-content(center);
+    @include justify-content(space-between);
+    
+}
+input[type="radio"]+label:hover,
+{
+  i{
+    color:$brand-primary;
+  }
+}
+
+
+input[type="radio"]:checked+label{
+  @include transition(all .75s);
+  i{
+    color:$brand-success;
+  }
+  &:focus{
+    outline: none;
+
+  }
+}
+
+.spotify{
+  
+  button:disabled{
+    background: gray;
+  }
+  .search, .submit{
+    background:$brand-primary;
+    color:white;
+  }
+  .empty{
+    padding:5px 0;
+    opacity:.6;
+    font-size:1.5em;
+  }
+  .track-info{
+    opacity: .6;
+    font-size: .8em;
+
+  }
+  .navigation-buttons{
+    width: 100%;
+      @include display(flex);
+      @include flex-direction(row);
+      @include align-items(center);
+      @include justify-content(space-between);
+      
+    button{
+      width: 48%;
+    }
+  }
+}
+.spotify-search{
+  width: 100%;
+    @include display(flex);
+    @include flex-direction(row);
+    @include align-items(center);
+    @include align-content(center);
+    @include justify-content(space-between);
+    @include flex-wrap(wrap);
+}
+
+.deny{
+  background: black;
+  color:white;
+}
+
+.spotify-list{
+  width: 100%;
+  input[type="radio"]+label{
+    background: black;
+    width:100%;
+    margin: 0;
+    padding:10px;
+    border-top:solid 2px transparentize(white, .6);
+    @include MQ(M){
+      background:transparent;
+      font-size:1.3em;
+    }
+  }
+  
+  input[type="radio"]:nth-of-type(1) + label{
+    border-top:none;
+  }
+  input[type="radio"]:checked +label{
+    background: $brand-success;
+  }
+}
