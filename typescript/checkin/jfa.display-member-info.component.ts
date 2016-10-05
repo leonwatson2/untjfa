@@ -25,8 +25,6 @@ import {BooleanWordComponent} from '../misc/jfa.boolean-word.component';
 export class DisplayMemberInfoComponent {
 	@Input('checkIn') member;
 	
-	ngOnInit(){
-		console.log(this.member);
-	}
+
 
 }

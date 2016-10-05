@@ -28,7 +28,7 @@ import {MemberInfoComponent} from './';
 
 export class CheckInListAllComponent {
 	private checkIns;
-	private title="All Check Ins";
+	private title = "All Check Ins";
 	constructor(private checkinService:CheckInService){}
 
 	ngOnInit(){

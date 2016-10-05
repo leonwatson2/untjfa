@@ -1,7 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ElementRef} from '@angular/core';
 import {DisplayMemberInfoComponent} from './jfa.display-member-info.component';
 import {MemberInfoFormComponent} from '../forms/jfa.forms';
-import {CheckInService} from '../services';
+import {CheckInService, HeroService} from '../services';
 
 @Component({
 	selector: 'member-info',
@@ -10,21 +10,38 @@ import {CheckInService} from '../services';
 			<edit-member-info *ngIf="editing" (update)="updateMemberInfo($event)" (cancel)="toggleEditing(false)" [member]="member"></edit-member-info>
 			`,
   directives: [DisplayMemberInfoComponent, MemberInfoFormComponent],
-  styleUrls:['style/css/member-list.css']
+  styleUrls:['style/css/checkin-list.css']
 })
 
 export class MemberInfoComponent {
 	@Input() member;
+	private editingClassName = "editing";
 	private editing:boolean = false;
+	constructor(private element:ElementRef, private heroService:HeroService){}
 
-	ngOnInit(){
-	}
+	ngOnInit(){}
 	
 	toggleEditing(bool){
 		this.editing = bool;
+		this.toggleClass(this.editingClassName, bool);
 	}
 
-	updateMemberInfo(member){
-		console.log(member);
+	updateMemberInfo(member){}
+
+	toggleClass(className:string, add:boolean){
+		var classes:string = this.element.nativeElement.className;
+		if(add){
+			this.addClass(className);
+			console.log(this.element.nativeElement);
+			this.heroService.smoothScroll(this.element.nativeElement.offsetTop);
+		}else this.removeClass(className);
+	}
+	addClass(newClass:string){
+		this.element.nativeElement.className += " " + newClass;
+	}
+	removeClass(oldClass:string){
+		var el = this.element.nativeElement;
+		var classes:string = this.element.nativeElement.className;
+		el.className = classes.replace(oldClass, "");
 	}
 }
