@@ -47,7 +47,21 @@
 		max-width: inherit;
 	}
 }
-
+.type{
+  position: absolute;
+  right:-1px;
+  top:5px;
+  padding: 5px;
+  background:$brand-primary;
+  color:#efe;
+  width: auto;
+  height:50;
+  border-radius:2px 0 0 2px;
+  @include MQ(M){
+    font-size:1.5em;
+    top:10px;
+  }
+}
 .info{
 	padding: 10px;
 	font-size: 1.3em;

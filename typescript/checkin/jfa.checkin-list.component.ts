@@ -1,7 +1,11 @@
 import {Component, Input, OnChanges, OnDestroy} from '@angular/core';
+
 import {CheckInService} from '../services';
+import {JFAEventTypePipe} from '../pipes';
+
 import {DisplayMemberInfoComponent} from './';
 import {DefinedEvent} from '../classes/Event';
+
 
 import * as moment from 'moment'
 @Component({
@@ -11,6 +15,7 @@ import * as moment from 'moment'
 			
       <div *ngIf="checkIns?.length > 0">
         <h3>{{title}}</h3>
+        <span class="type">{{event.type | eventname}}</span>
         <div *ngFor="let checkIn of checkIns" class="checkin-name">
           <display-member-info [checkIn]="checkIn"></display-member-info>
         </div>
@@ -20,6 +25,7 @@ import * as moment from 'moment'
 		</div>
 			`,
   directives: [DisplayMemberInfoComponent],
+  pipes:[JFAEventTypePipe],
   styleUrls:['style/css/checkin-board.css', 'style/css/checkin-list.css']
 })
 
@@ -51,7 +57,7 @@ export class CheckInListComponent implements OnChanges, OnDestroy{
   }
   setTitle(){
     if(this.hasPast()){
-      this.title = "Who came?";
+      this.title = "Who came? " + this.event.startMoment.format('MMM DD\, YY');
     }else {
       this.title = "Who's Here?";
     }
