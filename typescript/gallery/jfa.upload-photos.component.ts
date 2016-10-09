@@ -6,6 +6,7 @@ import {EventsService, UserService, MediaService, MediaLocation} from '../servic
 import {EventPicturesComponent} from './jfa.editable-event-pictures.component';
 import {LoadingComponent} from '../misc/jfa.loading.component';
 
+import {JFADatePipe} from '../pipes';
 
 import * as moment from 'moment';
 
@@ -16,7 +17,9 @@ import * as moment from 'moment';
 				<form #photoForm="ngForm" (ngSubmit)="submitPhotos(photoForm.value)">
 					<label for="event-name">Choose an Event</label>
 					<select required name="event" [(ngModel)]="eventId" id="event-name">
-						<option *ngFor="let event of allEvents" [value]="event.id">{{event.name}}</option>
+						<option *ngFor="let event of allEvents" [value]="event.id">
+							{{event.name}}, {{event.start_time | moment:'ddd MMM\, Do'}}
+						</option>
 					</select>
 					<input type="file" 
 						name="the_file" 
@@ -50,6 +53,7 @@ import * as moment from 'moment';
 			<hr />
 			`,
   directives: [FILE_UPLOAD_DIRECTIVES, LoadingComponent],
+  pipes:[JFADatePipe],
   styleUrls:['style/css/gallery.css']
 })
 
