@@ -60,7 +60,7 @@ var grid;
 							</li>
 							<li data-info>
 								<p class="mediaDescriptionHeader"></p>
-								<p class="mediaDescriptionText"><a [href]="photo.url" download>Download This Photo</a></p>
+								<p class="mediaDescriptionText"><a [href]="photo.url" [download]="photo.id  + '_' + photosId ">Download This Photo</a></p>
 							</li>
 					</ul>
 				</ul>
