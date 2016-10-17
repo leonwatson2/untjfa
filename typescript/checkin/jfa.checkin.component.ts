@@ -110,7 +110,7 @@ enum eCheckInStage {
 						[(ngModel)]="userCheckIn.student_id"
 						/>
 				</div>
-				<div class="input-group">
+				<div *ngIf="!userService.isAdmin" class="input-group">
 					<input 
 						id="remember" 
 						type="checkbox" 
@@ -294,8 +294,10 @@ export class CheckInComponent implements OnChanges{
 		if(response.addSong){
 			this.spotifyService.addSongSuggestions(this.userCheckIn, response.tracks)
 				.subscribe((res)=>{
-					let endIndex = this.userCheckIn.name.indexOf(' ') || this.userCheckIn.name.length - 1;
-					var firstName = this.userCheckIn.name.slice(0, endIndex);
+					var name = this.userCheckIn.name;
+					let endIndex = name.indexOf(' ');
+					var firstName = (endIndex == -1) ? name : name.slice(0, endIndex);
+					console.log(endIndex, name.length, firstName);
 					this.messages.finished = "Cool " + firstName + ", " + "we'll add it soon. Now let's flow.";
 					this.closeCheckIn();
 					console.log(res);
