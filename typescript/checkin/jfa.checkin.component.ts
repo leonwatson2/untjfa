@@ -36,7 +36,7 @@ enum eCheckInStage {
 	template: `
 		<div [ngClass]="{do:checkingIn}" [ngSwitch]="checkInStage" class="check-in">
 			<form *ngSwitchCase="eCheckInStage.returner" class="check-in-form" (ngSubmit)="submitById()" #checkInReturnerForm="ngForm">
-				<div class="close" (click)="closeCheckIn(); checkInStage='default'"><i class="fa fa-close"></i></div>
+				<div class="close" (click)="closeCheckIn(0); checkInStage='default'"><i class="fa fa-close"></i></div>
 				<h3 class="message">Welcome Back! Check in as :</h3>
 
 				<h3 class="message" [innerHtml]="userCheckIn.name"></h3>
@@ -61,7 +61,7 @@ enum eCheckInStage {
 			</form>
 
 			<form *ngSwitchCase="eCheckInStage.email" class="check-in-form" (ngSubmit)="submitByEmail()" #checkEmailForm="ngForm">
-				<div class="close" (click)="closeCheckIn(); checkInStage='default'"><i class="fa fa-close"></i></div>
+				<div class="close" (click)="closeCheckIn(0); checkInStage='default'"><i class="fa fa-close"></i></div>
 				<h3 class="message">We just need a few things! </h3>
 				<div class="input-group">
 
@@ -85,7 +85,7 @@ enum eCheckInStage {
 			</form>
 
 			<form *ngSwitchCase="eCheckInStage.info" class="check-in-form" (ngSubmit)="submit(checkInForm.value)" #checkInForm="ngForm">
-				<div class="close" (click)="closeCheckIn()"><i class="fa fa-close"></i></div>
+				<div class="close" (click)="closeCheckIn(0)"><i class="fa fa-close"></i></div>
 
 				<h3 class="message" [innerHtml] = "messages.firstCheckIn"></h3>
 				
@@ -173,7 +173,7 @@ enum eCheckInStage {
 
 
 			<div *ngSwitchCase="eCheckInStage.finished" class="final-message message fade-in">
-				<div class="close" (click)="closeCheckIn()"><i class="fa fa-close"></i></div>
+				<div class="close" (click)="closeCheckIn(0)"><i class="fa fa-close"></i></div>
 				<h3 class="message" [innerHtml]="messages.finished"></h3>
 			</div>
 
@@ -322,7 +322,7 @@ export class CheckInComponent implements OnChanges{
 
 			});
 	}
-	closeCheckIn(){
+	closeCheckIn(delay = 3500){
 		this.checkInStage = eCheckInStage.finished;
 		setTimeout(()=>{
 			if(this.userService.isAdmin){
@@ -331,8 +331,8 @@ export class CheckInComponent implements OnChanges{
 			}else {
 				this.checkInStage =  eCheckInStage.checkedIn;
 			}
-					this.checkingIn = false;
-				}, 3500);
+			this.checkingIn = false;
+				}, delay);
 		this.checkInService.setCheckedIn(this.currentEventId);
 	}
 

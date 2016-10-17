@@ -57,7 +57,7 @@ export class CheckInListComponent implements OnChanges, OnDestroy{
   }
   setTitle(){
     if(this.hasPast()){
-      this.title = "Who came? " + this.event.startMoment.format('MMM DD\, YY');
+      this.title = "Who came? " + this.event.startMoment.format('MMM DD\, YYYY');
     }else {
       this.title = "Who's Here?";
     }
