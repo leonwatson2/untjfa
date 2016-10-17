@@ -57,9 +57,9 @@ export class SpotifyService {
 	private limit = 10;
 	private market = "US";
 	public userInfo:iSpotifyUser;
-	private clientId = "776a99a58dd64f00b99cb40275b93a21";
-	private clienSecret = "ffd7d9ca4fef486b859a4ba3c0b268f7";
-	private redirectUri = "http://untjfa.com/spotifyadmin";
+	private clientId = "c1bbb01799d24534a243634899613fca";
+	private clienSecret = "a81808b50e25429b808d0d3edc91ee25";
+	private redirectUri = "http://localhost/jfa/spotifyadmin";
 	private userSpotifyResponse:iSpotifyResponse;
 	private scopes:SpotifyScopes;
 	constructor(private http:Http){
