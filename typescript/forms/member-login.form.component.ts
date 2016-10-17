@@ -107,10 +107,8 @@ export class MemberLoginFormComponent {
     			this.setError(this.member.email + " is not in the system.");
     		break;
     		case 1020:
-    			this.setError("Incorrect Password");
-    			break;
     		case 1021:
-    			this.setError("Email's not quite right");
+    			this.setError("Incorrect Email/Password");
     			break;
     		default:;
     	}
