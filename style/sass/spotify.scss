@@ -12,7 +12,7 @@
 }
 
 .playlist{
-  width: 25%;
+  width: 10%;
   .photo{
     width: 100%;
     img{
@@ -43,6 +43,22 @@
 	@include flex-grow(1);
   }
   @include MQ(M){
-  	width: 33%;
+  	width: 25%;
   }
+}
+
+.spotify-login-btn{
+  border: none;
+  color: white;
+  height: 40px;
+  width: 250px;
+  border-radius: 40px;
+  background-color: #1ED760;
+}
+.spotify-login{
+    @include display(flex);
+    @include flex-direction(column);
+    @include align-items(center);
+    @include align-content(center);
+    @include justify-content(space-between);
 }

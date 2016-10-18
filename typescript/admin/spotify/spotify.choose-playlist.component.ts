@@ -24,15 +24,16 @@ export class SpotifyPlaylistComponent {
 	constructor(private spotifyService:SpotifyService){}
 
 	ngOnInit(){
-		this.getUserPlaylist();
+		this.getUserPlaylists();
 	}
-	getUserPlaylist(){
-		this.spotifyService.getUserSpotifyPlaylist()
+	getUserPlaylists(){
+		this.spotifyService.getUserSpotifyPlaylists()
 			.subscribe((res)=>{
 				this.playlists = res.items;
 			})
 	}
 	chosenPlaylist(playlist){
+		
 		this.chosen.emit(playlist);
 	}
 

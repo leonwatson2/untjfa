@@ -6,12 +6,14 @@ import {SpotifyService} from '../services';
 @Component({
 	selector: 'jfa-spotify-admin',
 	template: `
-			<spotify-login></spotify-login>
+			<spotify-login class="spotify-login"></spotify-login>
 			<spotify-playlist (chosen)="setChosenPlaylist($event)" *ngIf="spotifyService.isLoggedIn && !chosen"></spotify-playlist>
 			<spotify-accept *ngIf="chosen" [chosenPlaylist]="chosenPlaylist"></spotify-accept>
 
 			`,
   directives: [SpotifyAcceptComponent, SpotifyLoginComponent, SpotifyPlaylistComponent, ROUTER_DIRECTIVES],
+  styleUrls:['style/css/spotify.css']
+  
 })
 
 export class SpotifyAdminComponent {
