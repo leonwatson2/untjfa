@@ -37,6 +37,7 @@ declare interface iSpotifyEndPoints{
 	currentUserProfile?:string
 	tracks?:string
 	currentUserPlaylist?:string
+	playlist?:string
 }
 
 declare interface iSpotifyFollowers{
