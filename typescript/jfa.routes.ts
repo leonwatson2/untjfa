@@ -13,7 +13,6 @@ import {EmailComponent} from './email/jfa.send-mail.component';
 import {CheckInListingsComponent} from './checkin/jfa.checkin-listings.component';
 import {DashboardComponent} from './dashboard/jfa.dashboard.component';
 import {SpotifyAdminComponent} from './admin/jfa.spotify-admin';
-import {PublicSpotifyPlaylistComponent} from './admin/spotify';
 
 
 import {AuthGuard} from './services';
@@ -100,13 +99,6 @@ export const adminRoutes = [
 		name: SignUpComponent,
 		title:"JFA Signup",
 		menuName:"Signup",
-	},
-	{
-		path:'spotify/playlist',
-		routerPath:'spotify/playlist',
-		title:'JFA Spotify Playlist',
-		name:PublicSpotifyPlaylistComponent,
-		menuName:'JFA Playlist'
 	},
 	{
 		path:'email',
