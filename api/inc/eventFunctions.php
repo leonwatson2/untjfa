@@ -85,9 +85,7 @@ function addEvent(){
 
 function updateEvent($params){
 	$jfaDb = getDatabaseObject();
-
 	$event = getPostVariables();
-	
 	if(isset($event['imageChanged'])){
 		$event['image_url'] = moveTempPhotoToEventDirectory(TEMP_MEDIA_DIR, getEventDirectoryName($event), $event['image_url']);
 		unset($event['imageChanged']);
@@ -98,20 +96,7 @@ function updateEvent($params){
 			$jfaDb->update(DB_EVENTS, $event, ['id' => $event['id']]);
 	}	
 
-	/* Error Checking */
-
-	if ($jfaDb->error()[1] == NULL) {
-
-		$response_array = ['status' => 201, 'event' => $event];
-
-	} else {
-
-		$response_array = ['status' => 404, 'reason' => $jfaDb->error()[2]];
-
-	}
-	setResponse($response_array);
-
-
+	setResponse(getResponseArray($jfaDb, $event, 'event'));
 
 }
 
@@ -143,8 +128,19 @@ function getEventsAndMedia(){
 
 							]);
 	$columns = ['name', 'description', 'thumbnail_url(thumbnailUrl)', 'url', 'original_name(originalName)', 'id', 'uploaded_by(uploadedBy)', 'date_uploaded(dateUploaded)'];
+	error_reporting(E_ALL ^ E_WARNING); // surpress unable to create temp file. warning
 	foreach ($events as $key => $value) {
 		$events[$key]['media'] = $jfaDb->select(DB_MEDIA, $columns, ['event_id'=>$value['id']]);
+		
+		//get sizes for all images
+		foreach($events[$key]["media"] as $pkey => $media){
+			if($img = getimagesize(BASEURL."/".$media["url"])){
+				$events[$key]["media"][$pkey]["size"] = ["width"=>$img[0], "height"=>$img[1]];
+			}
+			if($img = getimagesize(BASEURL."/".$media["thumbnailUrl"])){
+				$events[$key]["media"][$pkey]["tn_size"] = ["width"=>$img[0], "height"=>$img[1]];
+			}
+		}
 	}
 	setResponse(getResponseArray($jfaDb, $events, 'events'));
 }
