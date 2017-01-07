@@ -26,7 +26,13 @@ function checkInHandler($params){
 			deleteCheckin($params);
 			}
 	}else if($method == "PUT"){
-		updateCheckin($params);
+		switch($params[0]){
+			case 'shirtstatus':
+				updateShirtStatus($params);
+				break;
+			default:
+				updateCheckin($params);
+		}
 	}else 
 	if(empty($params[0])){
 			getCheckins(); //GET
@@ -54,9 +60,9 @@ function checkInHandler($params){
 function getCheckInByEmail(){
 	$jfaDb = getDatabaseObject();
 	
-	$email = getPostVariables();
+	$variables = getPostVariables();
 
-	$checkIn = getCheckInWithInfo($jfaDb, $email, "email");
+	$checkIn = getCheckInWithInfo($jfaDb, strtolower($variables["email"]), "email");
 	
 	 
 	
@@ -245,6 +251,26 @@ function getCheckInList($id = NULL){
 		setResponse(getResponseArray($jfaDb, $events, 'events'));
 	}
 }
+
+function updateShirtStatus(){
+	$member = getPostVariables()["member"];
+	$jfaDb = getDatabaseObject();
+	if(!$jfaDb->has(DB_CHECKIN_INFO, ["id"=> $member["id"]]))
+		$jfaDb->insert(DB_CHECKIN_INFO, ["id"=> $member["id"]]);
+	$jfaDb->update(DB_CHECKIN_INFO, ["received_shirt"=> $member["receivedShirt"]], ["id"=>$member["id"]]);
+
+	setResponse(getResponseArray($jfaDb, $member, 'member'));
+
+}
+function updateMembershipStatus(){
+	$member = getPostVariables()["member"];
+	$jfaDb = getDatabaseObject();
+	$jfaDb->update(DB_CHECKIN_INFO, ["paid_member"=> $member["paidMember"]], ["id"=>$member["id"]]);
+
+	setResponse(getResponseArray($jfaDb, $member, 'member'));
+
+}
+
 function getCheckInWithInfo($jfaDb, $value, $by = "id"){
 	$checkIn = $jfaDb->get(DB_CHECKINS, 
 					[
@@ -290,7 +316,9 @@ function getCheckInColumns(){
 						DB_CHECKINS.".name",
 						DB_CHECKINS.".id",
 						DB_CHECKINS.".student_id(studentId)",
-						DB_SHIRT_SIZES.".abbr(tShirtSize)"
+						DB_SHIRT_SIZES.".abbr(tShirtSize)",
+						DB_CHECKIN_INFO.".paid_member(paidMember)",
+						DB_CHECKIN_INFO.".received_shirt(receivedShirt)"	
 					];
 	}
 	return $columns;
