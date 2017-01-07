@@ -37,7 +37,7 @@ export class HeroService extends Title{
             newTitle = "JFA | UNT Juggling and Flow Arts";
         }else {
             if(route)
-                newTitle = "JFA | " + route.menuName;
+                newTitle = "JFA | " + route.title;
         }
 
         super.setTitle(newTitle);

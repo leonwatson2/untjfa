@@ -67,6 +67,12 @@ export const publicRoutes = [
 		title : "Gallery",
 		menuName :"Gallery",
 
+	},
+	{
+		path:'gallery',
+		routerPath:'gallery/:id',
+		name : GalleryComponent,
+		title : "Gallery",
 	}
 
 ]
@@ -78,7 +84,7 @@ export const memberRoutes = [
 		routerPath:'dashboard',
 		name: DashboardComponent,
 		title: 'Your Dashboard',
-		menuName: ''
+		menuName: 'Dashboar'
 	}
 
 ];
@@ -90,7 +96,7 @@ export const adminRoutes = [
 		canActivate:[AuthGuard],
 		name : SignUpListComponent,
 		title:"Signup List",
-		menuName:"Signup List",
+		menuName:"Signup Lst",
 	},
 	{
 		path:'signup',
