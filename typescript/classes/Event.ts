@@ -46,6 +46,8 @@ export class DefinedEvent implements JfaEvent, IHoldMoments{
 	public image_url;
 	public id;
 	public checkIns;
+	public date_created;
+	
 	constructor(newEvent){
 		this.id = newEvent.id;
 		this.name = newEvent.name;
@@ -57,6 +59,7 @@ export class DefinedEvent implements JfaEvent, IHoldMoments{
 		this.location = newEvent.location;
 		this.number_of_checkins = newEvent.number_of_checkins;
 		this.image_url = newEvent.image_url;
+		this.date_created = newEvent.date_created;
 
 	}
 	isHappening(){

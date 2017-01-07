@@ -51,7 +51,6 @@ export class EventsComponent {
   }
 
   addEvent(event){
-    console.log(event);
     this.eventsService.addEvent(event).subscribe((res)=>{
       if(res.status == 201)
         this.updateEvents();

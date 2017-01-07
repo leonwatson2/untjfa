@@ -74,19 +74,19 @@ export class EventComponent {
   }
   changeEvent(event){
     this.event = event;
-    this.eventService.updateEvent(event).subscribe((res)=>{
+    console.log(event);
+    this.eventService.updateEvent(event)
+    .subscribe((res)=>{
       if(res.status == 201)
         this.resetEvent();
     });
      
   }
   deleteEvent(shouldDelete){
-    console.log(shouldDelete);
     if(shouldDelete){
       this.isDeleting = true;
       this.eventService.deleteEvent(this.event)
           .subscribe((res)=>{
-            console.log(res);
              if(res.status == 201){
                this.delete.emit({});
              }
@@ -94,21 +94,25 @@ export class EventComponent {
     
     }else {
       this.confirmDelete = false;
-      console.log("Don't delete it.");
     }
   }
    resetEvent(){
-      this.hasNotification = true;
-      this.notification = 'Saved! <i class="fa fa-smile-o"></i>';
+      this.showNotification('Saved! <i class="fa fa-smile-o"></i>');
       this.isEditingEvent = false;
       
       this.saved.emit({});
       window.scrollTo(0, this.elementRef.nativeElement.offsetTop);
       
+      
+     
+   }
+
+   showNotification(message, duration = 2000){
+      this.hasNotification = true;
+      this.notification = 'Saved! <i class="fa fa-smile-o"></i>';
       setTimeout(()=>{
         this.hasNotification = false;
-      }, 2000)
-     
+      }, duration)
    }
 
 }
