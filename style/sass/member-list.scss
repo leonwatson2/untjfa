@@ -1,0 +1,35 @@
+@import "bourbon/bourbon";
+@import "bootstrap/variables";
+@import '../partials/layout'; // custom mixins
+
+h2,h3,h4,h5{
+	text-align: left;
+}
+.title{
+	text-align: left;
+	font-size: 1.33em
+}
+.main{
+	@include display(flex);
+  @include flex-direction(row);
+  @include flex-wrap(wrap);
+  @include align-items(flex-start);
+  @include justify-content(space-around);
+  @include align-content(flex-start);
+}
+.card{
+  background: white;
+  width: 100%;
+
+  padding: 10px 0px;
+  position: relative;
+  opacity: .95;
+  border-radius: 4px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 5px 10px rgba(0,0,0,.25);
+  z-index:4;
+	@include MQ(M){
+    width:45%;
+    padding: 10px;
+  }
+}

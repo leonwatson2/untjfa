@@ -79,7 +79,7 @@ function setResponse($responseArray){
 
 
 function getEncryptedPass($member){
-	return md5($member['email'] . md5($member['password']) . JFA_SALT);
+	return md5(strtolower($member['email']) . md5($member['password']) . JFA_SALT);
 }
 
 function getResponseArray($jfaDb, $values, $valueName){

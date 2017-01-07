@@ -6,8 +6,13 @@
 		@include align-items(center);
 		@include align-content(center);
 		@include justify-content(space-around);
-		@include flex-wrap(wrap);
-		
+		@include flex-wrap(no-wrap);
+		position: absolute;
+		left: 0;
+		bottom:0;
+		width:25%;
+		background: white;
+		overflow: scroll;
 }
 
 .card{
@@ -17,11 +22,11 @@
 .event-list-buttons{
 	width: 100%;
 		@include display(flex);
-		@include flex-direction(row);
+		@include flex-direction(column);
 		@include align-items(center);
 		@include align-content(center);
 		@include justify-content(center);
-		@include flex-wrap(wrap);
+		@include flex-wrap(no-wrap);
 		
 	button{
 		margin:5px 10px;
@@ -65,6 +70,21 @@
 .info{
 	padding: 10px;
 	font-size: 1.3em;
+	@include display(flex);
+	@include flex-direction(row);
+	@include align-items(center);
+	@include align-content(center);
+	@include justify-content(space-around);
+	@include flex-wrap(wrap);
+}
+
+.fa.fa-black-tie{
+	width: 100%;
+	text-align: center;
+	@include transition(.75s ease-in);
+	&.active{
+		color:$brand-primary;
+	}
 }
 
 
