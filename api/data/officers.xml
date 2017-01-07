@@ -4,31 +4,31 @@
 	<officer
 	name="Leon"
 	title="President"
-	posterUrl="references/pic.jpg"
+	posterUrl="references/officers/president.jpg"
 	videoUrl=""	
 	/>
 	<officer
 	name="Tim"
 	title="Vice President"
-	posterUrl="references/pic.jpg"
+	posterUrl="references/officers/vice_president.jpg"
 	videoUrl=""	
 	/>
 	<officer
 	name="Susie"
 	title="Props Master"
-	posterUrl="references/pic.jpg"
+	posterUrl="references/officers/props_master.jpg"
 	videoUrl=""	
 	/>
 	<officer
 	name="Steven"
 	title="Historian"
-	posterUrl="references/pic.jpg"
+	posterUrl="references/officers/historian.jpg"
 	videoUrl=""	
 	/>
 	<officer
 	name="Rach^2"
 	title="JFA Advisor"
-	posterUrl="references/pic.jpg"
+	posterUrl="references/officers/advisor.jpg"
 	videoUrl=""	
 	/>
 </officers>
