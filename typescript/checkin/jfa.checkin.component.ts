@@ -16,7 +16,9 @@ interface UserCheckIn{
 	student_id?:number
 	numberOfCheckins?:number
 	remember?:boolean
-	tShirtSize?:any;
+	tShirtSize?:any
+	error?:Boolean
+	message?:String
 
 }
 
@@ -28,7 +30,8 @@ enum eCheckInStage {
 	finished,
 	checkedIn,
 	spotify,
-	notCheckedIn
+	notCheckedIn,
+	error
 
 }
 @Component({
@@ -171,10 +174,14 @@ enum eCheckInStage {
 			
 			<checkin-spotify-form (finished)="spotifyResponse($event)" *ngSwitchCase="eCheckInStage.spotify"></checkin-spotify-form>
 
-
 			<div *ngSwitchCase="eCheckInStage.finished" class="final-message message fade-in">
 				<div class="close" (click)="closeCheckIn(0)"><i class="fa fa-close"></i></div>
 				<h3 class="message" [innerHtml]="messages.finished"></h3>
+			</div>
+			
+			<div *ngSwitchCase="eCheckInStage.error" class="error-message message fade-in">
+				<div class="close" (click)="closeCheckIn(0)"><i class="fa fa-close"></i></div>
+				<h3 class="message" [innerHtml]="messages.error"></h3>
 			</div>
 
 			<button 
@@ -213,7 +220,8 @@ export class CheckInComponent implements OnChanges{
 	private submitting = false;
 	private messages = {
 		firstCheckIn : "Cool your first checkin! We just need two more things.",
-		finished : "We got you! Now Let's Flow"
+		finished : "We got you! Now Let's Flow",
+		error : "Something went wrong, try refreshing the page. <br> <small>If this continues email leon@vlw2.com</small>"
 	}
 	private userCheckIn:UserCheckIn = {name:"", email:"", student_id:null, event_id:30};
 	private eCheckInStage = eCheckInStage;
@@ -250,46 +258,66 @@ export class CheckInComponent implements OnChanges{
 					s.fontSize = this.sanitizer.bypassSecurityTrustStyle("font-size:"+ fontSize +"em;");
 				});
 			});
-		if(navigator.geolocation)
-			console.log(true);
+		// if(navigator.geolocation)
+		// 	console.log(true);
 		
 	}
+
 	ngOnChanges(){
 		this.userCheckIn.event_id = this.currentEventId = Number(this.currentEvents[0].id);
 		if(this.checkInService.alreadyCheckedIn(this.currentEventId) && !this.userService.isAdmin){
 			this.checkInStage = eCheckInStage.checkedIn;
 		}
 	}
+
 	startCheckIn(){
 		this.checkingIn = true;
 		this.returningCheckIn ? this.checkInStage = eCheckInStage.returner : this.checkInStage = eCheckInStage.email;
 	}
+
 	submitByEmail(){
 		this.submitting = true;
 		this.userCheckIn.event_id = this.currentEventId;
 		this.checkInService.checkEmail(this.userCheckIn.email)
 			.subscribe((checkIn)=>{
 				this.submitting = false;
+				
 				if(checkIn){
-					this.userCheckIn = checkIn;
-					if(this.hasAllInformation())
-						this.submit();
-				} else {
-					this.checkInStage = eCheckInStage.info;
-				}
+					if(checkIn.error){
+						this.checkInStage = eCheckInStage.error;
+
+					}else if(checkIn.name){
+
+						this.userCheckIn = checkIn;
+						if(this.hasAllInformation())
+							this.submit();
+
+					} 
+
+				}else {
+						this.checkInStage = eCheckInStage.info;
+					}
+
 			});
 	}
+
 	submitById(){
 		this.submitting = true;
 		this.checkInService.checkInById()
 			.subscribe((checkIn)=>{
-				this.submitting = false;
-				this.userCheckIn = checkIn;
-				if(this.hasAllInformation())
-					this.submit();
+				if(checkIn.error){
+					this.checkInStage = eCheckInStage.error;
+
+				}else{
+					this.submitting = false;
+					this.userCheckIn = checkIn;
+					if(this.hasAllInformation())
+						this.submit();
+				}
 			});
 
 	}
+
 	spotifyResponse(response){
 		if(response.addSong){
 			this.spotifyService.addSongSuggestions(this.userCheckIn, response.tracks)
@@ -297,16 +325,15 @@ export class CheckInComponent implements OnChanges{
 					var name = this.userCheckIn.name;
 					let endIndex = name.indexOf(' ');
 					var firstName = (endIndex == -1) ? name : name.slice(0, endIndex);
-					console.log(endIndex, name.length, firstName);
 					this.messages.finished = "Cool " + firstName + ", " + "we'll add it soon. Now let's flow.";
 					this.closeCheckIn();
-					console.log(res);
 				});
 		}else {
 			this.closeCheckIn();
 		}
 
 	}
+
 	submit(){
 		let remember = this.userCheckIn.remember;
 		delete this.userCheckIn.remember;
@@ -315,15 +342,19 @@ export class CheckInComponent implements OnChanges{
 
 		this.checkInService.addCheckin(this.userCheckIn)
 			.subscribe((checkIn)=>{
-				this.submitting = false;
-				this.userCheckIn = checkIn;
-				if(remember)
-					this.checkInService.storeCheckInId(checkIn);
-				if(this.hasAllInformation())
-					this.closeCheckIn();
-
+				if(checkIn.error){
+					this.checkInStage = eCheckInStage.error;
+				}else{
+					this.submitting = false;
+					this.userCheckIn = checkIn;
+					if(remember)
+						this.checkInService.storeCheckInId(checkIn);
+					if(this.hasAllInformation())
+						this.closeCheckIn();
+				}
 			});
 	}
+
 	closeCheckIn(delay = 3500){
 		this.checkInStage = eCheckInStage.finished;
 		setTimeout(()=>{
@@ -335,12 +366,14 @@ export class CheckInComponent implements OnChanges{
 			}
 			this.checkingIn = false;
 				}, delay);
-		this.checkInService.setCheckedIn(this.currentEventId);
+		if(!this.userService.isAdmin)
+			this.checkInService.setCheckedIn(this.currentEventId);
 	}
 
 	updateShirtSize(shirtSize){
 		this.userCheckIn.tShirtSize = shirtSize.id;
 	}
+
 	setRandomOfficerName(){
 		this.settingsService.getOfficerData()
 			.subscribe((res)=>{
@@ -350,6 +383,7 @@ export class CheckInComponent implements OnChanges{
 				this.randomOfficer = officerNames[Math.floor(Math.random()*officerNames.length)]
 			})
 	}
+
 	checkForRecentCheckIn(){
 		if(this.checkInService.checkForRecentCheckIn()){
 			this.checkInService.getCheckInInfo(this.checkInService.checkInId)
@@ -363,9 +397,10 @@ export class CheckInComponent implements OnChanges{
 						this.returningCheckIn = false;
 				});
 		}else {
-			this.returningChIn = false;
+			this.returningCheckIn = false;
 		}
 	}
+
 	hasAllInformation(){
 		if(this.userCheckIn.numberOfCheckins >= 1 ){
 			if(!this.userCheckIn.tShirtSize){
