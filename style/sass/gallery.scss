@@ -39,6 +39,22 @@
   box-shadow: 0 5px 10px rgba(0,0,0,.25);
   z-index:4;
 }
+
+#jfa-gal{
+		@include display(flex);
+		@include flex-direction(row);
+		@include align-items(baseline);
+		@include align-content(center);
+		@include justify-content(space-around);
+		@include flex-wrap(wrap);
+		figure{
+			margin:10px 0;
+		}
+}
+.wall-container{
+	background: black;
+	color:white;
+}
 .photo-group{
 	@include display(flex);
 	@include flex-direction(column);

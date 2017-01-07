@@ -21,7 +21,7 @@ class LoginMember{
  `],
 	template: `
 <form *ngIf="!verifying" (ngSubmit)="login();" #signupForm="ngForm">
-	<h1>Login</h1>
+	<h1>Login <span *ngIf="member.email">with {{member.email}}</span></h1>
 	<div *ngIf="error" class="error" [innerHtml]="error"></div>
 	<div class="indicator"></div>
 	<label for="email">Email</label>
@@ -116,5 +116,5 @@ export class MemberLoginFormComponent {
     setError(value){
     	this.error = value;
     }
-
+    
 }//component
