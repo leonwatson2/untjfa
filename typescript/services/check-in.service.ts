@@ -23,6 +23,12 @@ export class CheckInService{
 		return this.http.post(`${this.apiLocation}/checkin/email`, {email})
 						.map((res)=>{
 							return res.json().checkIn;
+						}).catch(err =>{
+							let error = {
+								"error" : true,
+								"message": err
+							}
+							return Observable.of(error)
 						});
 	}
 	/*
@@ -34,10 +40,9 @@ export class CheckInService{
 		return this.http.post(`${this.apiLocation}/checkin/add`, {checkIn})
 						.map((res)=>{
 							return res.json().checkIn;
-						})
-						.catch(err=>{
-							console.log(err);
-							return Observable.of(err);
+						}).catch(err=>{
+							let error = this.createErrorObject(err)
+							return Observable.of(error);
 						});			
 	}
 	/*
@@ -48,7 +53,10 @@ export class CheckInService{
 		return this.http.get(`${this.apiLocation}/checkin/${checkInId}`)
 						.map((res)=>{
 							return res.json().checkIn ? res.json().checkIn : res.json().checkIns;
-						})
+						}).catch(err=>{
+							let error = this.createErrorObject(err)
+							return Observable.of(error);
+						});
 	}
 	getEventCheckInInfo(event:JfaEvent, fields:string[]){
 		let fieldList = "?fields=" + fields.join(',');
@@ -57,7 +65,8 @@ export class CheckInService{
 
 							return res.json().checkins;
 						}).catch((err)=>{
-							return Observable.of(err);
+							let error = this.createErrorObject(err)
+							return Observable.of(error);
 						});
 	}
 	storeCheckInId(checkIn){
@@ -90,6 +99,22 @@ export class CheckInService{
 		localStorage.removeItem(this.checkInIdKey);
 	}
 
+	updateShirtStatus(memberC){
+		
+		return this.http.put(`${this.apiLocation}/checkin/shirtstatus`, {member:memberC})
+						.map((res)=>{
+							return res.json().checkIn;
+						}).catch(err=>{
+							let error = this.createErrorObject(err)
+							return Observable.of(error);
+						});
+	}
 
+	createErrorObject(err:String){
+		return {
+			error:true,
+			message:err
+		}
+	}
 
 }

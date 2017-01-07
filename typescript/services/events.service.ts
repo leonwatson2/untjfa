@@ -36,7 +36,10 @@ export class EventsService{
 				.map(res => {
 					this._events = res.json().events;
 					return this.events;
-				});
+				}).catch(res=>{
+							console.log(res);
+							return Observable.of(res)
+						});
 			
 	}
 	_getEvents(){
@@ -53,25 +56,35 @@ export class EventsService{
 		.map(res =>{
 			this.eventTypes = res.json().eventTypes;
 			return res.json().eventTypes;
-		});
+		}).catch((res, err) =>{
+							console.log(err);
+							return Observable.of(res)
+						});
 	}
 	addEvent(newEvent){
 		return this.http.post(`${this.apiLocation}/events/add`, JSON.stringify(newEvent))
 						.map(res => {
 							return res.json();
+						}).catch((res, err)=>{
+							console.log(err);
+							return Observable.of(res)
 						})
 						
 	}
 	updateEvent(event){
 		return this.http.put(`${this.apiLocation}/events`, JSON.stringify(event))
 					.map( res => {
+						console.log(res);
 						return res.json();
-					});
+					})
 	}
 	deleteEvent(event){
 		return this.http.delete(`${this.apiLocation}/events/${event.id}`)
 					.map(res => {
 						return res.json();
+					}).catch((res,err)=>{
+						console.log(err);
+						return Observable.of(err);
 					});
 	}
 	sortEvents(events:JfaEvent[]){
