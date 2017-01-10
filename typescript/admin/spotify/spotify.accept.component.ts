@@ -14,6 +14,7 @@ import {SpotifySongComponent} from './';
 							<button (click)="addToPlaylist(track)" class="confirm">Accept</button>
 							<button (click)="denySpotifySuggestion(track)" class="deny">Deny</button>
 						</div>
+
 						<spotify-song [track]="track"></spotify-song>
 					</div>
 				</template>
@@ -26,7 +27,8 @@ import {SpotifySongComponent} from './';
 })
 
 export class SpotifyAcceptComponent {
-	@Input('chosenPlaylist') playlist;
+
+	@Input('tracks') playlist;
 	private tracks:iSpotifyTrack[];
 	private deletedSuggestions:iSpotifyTrack[] = [];
 	private addNewSong:boolean = true;
@@ -35,8 +37,12 @@ export class SpotifyAcceptComponent {
 	ngOnInit(){
 		this.updateTracks();
 		// setInterval(()=>{this.updateTracks()}, 7000);
-	}	
 
+	}	
+	ngOnChanges(){
+		if(this.playlist)
+			console.log(this.playlist);
+	}
 	updateTracks(){
 		this.spotifyServicee.getSpotifySuggestion()
 			.subscribe((res)=>{
@@ -69,7 +75,6 @@ export class SpotifyAcceptComponent {
 			let track = this.deletedSuggestions.pop();
 			this.spotifyServicee.addSongSuggestions({id:4}, track);
 			this.updateTracks();
-			console.log(track);
 		}
 	}
 	spotifyResponse(e){
