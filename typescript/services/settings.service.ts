@@ -37,7 +37,13 @@ export class SettingsService{
 			return res.json().shirtSizes;
 		});
 	}
-
+	getSettings(){
+		return this.http.get(`${this.apiLocation}/settings.json`)
+					.map(res=>{
+						console.log(res);
+						return res.json();
+					});
+	}
 	parseXml(text:string){
 		if(window.DOMParser){
 			var p = new DOMParser();

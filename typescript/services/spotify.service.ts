@@ -49,6 +49,7 @@ class SpotifyScopes {
 @Injectable()
 
 export class SpotifyService {
+
 	private SpotifyBaseUrl = 'https://api.spotify.com/'; 
 	private version = 'v1/'; 
 	private spotifyGet:iSpotifyEndPoints;
@@ -71,7 +72,8 @@ export class SpotifyService {
 				users:this.SpotifyBaseUrl + this.version + "users/",
 				currentUserProfile:this.SpotifyBaseUrl + this.version + "me/",
 				tracks:this.SpotifyBaseUrl + this.version + "tracks/",
-				currentUserPlaylist:this.SpotifyBaseUrl + this.version + "me/playlists/"
+				currentUserPlaylist:this.SpotifyBaseUrl + this.version + "me/playlists/",
+				playlist: this.SpotifyBaseUrl + this.version + "playlists/"
 			}
 	}
 	
@@ -141,7 +143,19 @@ export class SpotifyService {
 						return Observable.of(res);
 					});
 	}
-
+	getPlaylistTracks(playlist){
+		var head = this.getSpotifyAuthorization();
+		let options = new RequestOptions({
+			headers:head
+		})
+		return this.http.get(playlist.tracks.href, options)
+					.map(res =>{
+						return res.json();
+					})
+					.catch(res=>{
+						return Observable.of(res);
+					});	
+	}
 	getSpotifyUser(){
 		var head = this.getSpotifyAuthorization();
 		let options = new RequestOptions({
@@ -151,9 +165,10 @@ export class SpotifyService {
 					.map((res)=>{
 
 						this.userInfo = res.json();
-						console.log(this.userInfo);
 						return res.json();
 					}).catch((res)=>{
+						if(res.status == 401)
+							this.login()
 						return Observable.of(res);
 					})
 	}
@@ -162,7 +177,7 @@ export class SpotifyService {
 			Authorization: this.userSpotifyResponse.tokenType + " " + this.userSpotifyResponse.accessToken
 		});	
 	}
-	getUserSpotifyPlaylist(){
+	getUserSpotifyPlaylists(){
 		var head = this.getSpotifyAuthorization();
 		let options = new RequestOptions({
 			headers:head
@@ -171,6 +186,19 @@ export class SpotifyService {
 					.map((res)=>{
 						this.userInfo.playlists = res.json();
 						return res.json();
+					})
+	}
+	getSpotifyPlaylist(playlist:iSpotifyPlaylist){
+		let id = playlist.id
+		var head = this.getSpotifyAuthorization();
+		let options = new RequestOptions({
+			headers:head
+		})
+		return this.http.get(`${this.spotifyGet.playlist}/${id}`, options)
+					.map((res)=>{
+						return res;
+					}).catch((res)=>{
+						return Observable.of(res);
 					})
 	}
 	/**

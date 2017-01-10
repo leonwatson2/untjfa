@@ -116,7 +116,6 @@ export class UserService {
 		this._user = val;
 		this.isAdmin = this._user.isAdmin;
 		this.isLoggedIn = true;
-			console.log(this._user);
 		let idValue = sjcl.encrypt(this.cryptKey, this._user.id);
 		let userInfo = sjcl.encrypt(this.cryptKey, JSON.stringify(this._user));
 		localStorage.setItem(this.idKey, idValue);

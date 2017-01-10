@@ -2,14 +2,14 @@ import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Flower, Interest} from '../classes/Flower';
 import {UserService, UsersService} from '../services/';
-import {MemberSignupForm, MemberLoginForm} from '../forms/jfa.forms';
-
+import {MemberSignupForm} from '../forms/jfa.forms';
+import {MemberLoginFormComponent} from '../forms/member-login.form.component';
 @Component({
 	selector: 'jfa-register',
 	template: `
 
 	<section class="main">
-	<div *ngIf="!verifying" class="card signup" class="card signup">
+	<div *ngIf="!verifying" class="card signup">
           <member-signup-form></member-signup-form>
      </div>
 
@@ -23,7 +23,7 @@ import {MemberSignupForm, MemberLoginForm} from '../forms/jfa.forms';
 	</div>
 	</section>
 	`,
-	directives: [MemberSignupForm, MemberLoginForm],
+	directives: [MemberSignupForm, MemberLoginFormComponent],
 	styleUrls:['style/css/signup.css'], 
 
 })

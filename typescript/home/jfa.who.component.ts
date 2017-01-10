@@ -37,8 +37,7 @@ export class WhoComponent {
 	private title;
 	private subtitle;
 	private videos:Video[];
-	constructor(private sani:DomSanitizationService,
-				private settingsService:SettingsService){
+	constructor(private settingsService:SettingsService){
 	}
 	ngOnInit(){
 		this.settingsService.getOfficerData().subscribe((res)=>{
