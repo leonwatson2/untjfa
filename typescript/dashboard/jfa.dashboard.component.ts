@@ -1,21 +1,25 @@
 import {Component} from '@angular/core';
-import {CheckInsComponent} from './user-checkins.component';
-import {InfoComponent} from './user-info.component';
-import {PhotoNameComponent} from './user-photo-name.component';
-import {JFAFirstWordPipe} from '../pipes';
+
+interface DashboardItem{
+	name:String
+
+}
+
+interface DashboardSection{
+	name:String
+	items:DashboardItem[]
+}
 
 @Component({
 	selector: 'jfa-dashboard',
 	template: `
 			<div class="dashboard">
 				<h2><span>{{user.name | firstword}}'s</span> Dashboard</h2>
-				<user-photo-name [info]="user"></user-photo-name>
-				<user-checkins></user-checkins>
-				<user-info [info]="user"></user-info>
+
+				<officer-settings></officer-settings>
+				
 			</div>	
 			`,
-  directives: [CheckInsComponent, InfoComponent, PhotoNameComponent],
-  pipes: [JFAFirstWordPipe]
 })
 
 export class DashboardComponent {
@@ -25,5 +29,19 @@ export class DashboardComponent {
 		tShirtSize: "xs",
 		membership: "Officer"
 	}
+
+	private dashboardItems:DashboardSection[] = [{
+		name:"Profile",
+		items:[{name:"change info"}, {name:"Change Password"}]
+	},{
+		name:"Members",
+		items:[{name:"Edit Things"}]
+	},{
+		name:"Website",
+		items:[{name:"Edit Things"}]
+	}]
+
+
+
 }
 	
