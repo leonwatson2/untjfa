@@ -16,8 +16,7 @@ import {Component, Input} from '@angular/core';
 			<div class="membership">
 				Membership: <span [innerHtml]="info.membership"></span>
 			</div>
-			`,
-  directives: [],
+			`
 })
 
 export class InfoComponent {

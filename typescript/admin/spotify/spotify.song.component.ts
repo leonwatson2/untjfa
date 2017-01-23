@@ -3,13 +3,15 @@ import {Component, Input} from '@angular/core';
 @Component({
 	selector: 'spotify-song',
 	template: `
-			<h4 >{{song.name}}</h4>
-			<div>{{song.artists[0].name}}</div>
-			<div class="photo">
-				<img [src]="song?.album?.images[0].url" [alt]="song?.album?.name" />
-			</div>
+			<td>{{index}}</td>
+			<td>{{song.name}}</td>
+			<td>{{song.artists[0].name}}</td>
+			<td>
+				{{song.album.name}}
+			</td>
+			<td>It was me</td>
+
 			`,
-  directives: [],
   styles:[`
 	h4{
 		text-align:center;
@@ -21,6 +23,8 @@ import {Component, Input} from '@angular/core';
 })
 
 export class SpotifySongComponent {
+	// TODO on hover event emit track details
 	@Input('track') song;
+	@Input() index;
 	
 }

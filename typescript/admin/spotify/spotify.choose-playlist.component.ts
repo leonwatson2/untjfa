@@ -14,7 +14,6 @@ import {SpotifyService} from '../../services/';
 				</div>
 			</div>
 			`,
-  directives: [],
   styleUrls:['style/css/spotify.css']
 })
 
@@ -28,7 +27,7 @@ export class SpotifyPlaylistComponent {
 	}
 	getUserPlaylists(){
 		this.spotifyService.getUserSpotifyPlaylists()
-			.subscribe((res)=>{
+			.then((res)=>{
 				this.playlists = res.items;
 			})
 	}

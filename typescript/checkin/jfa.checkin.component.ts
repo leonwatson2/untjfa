@@ -1,9 +1,14 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {DomSanitizationService} from '@angular/platform-browser';
 import {NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
 import {NgForm, NgControl} from '@angular/forms';
 
-import {UserService, CheckInService, SettingsService, EventsService, SpotifyService} from '../services';
+import {UserService} from '../services/user.service';
+import {SpotifyService} from '../services/spotify.service';
+export {CheckInService} from '../services/check-in.service';
+export {SettingsService} from '../services/settings.service';
+export {EventsService} from '../services/events.service';
+
+import {CheckInService, SettingsService, EventsService} from '../services';
 import {SpotifyFormComponent} from '../forms/jfa.forms';
 
 import {JfaEvent} from '../classes/Event';
@@ -17,8 +22,8 @@ interface UserCheckIn{
 	numberOfCheckins?:number
 	remember?:boolean
 	tShirtSize?:any
-	error?:Boolean
-	message?:String
+	error?:boolean
+	message?:string
 
 }
 
@@ -205,7 +210,6 @@ enum eCheckInStage {
 			</button>
 		</div>
 			`,
-  directives: [NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault, SpotifyFormComponent],
   styleUrls:['style/css/checkin.css']
 })
 
@@ -233,7 +237,6 @@ export class CheckInComponent implements OnChanges{
 				private checkInService:CheckInService,
 				private settingsService:SettingsService,
 				private eventsService:EventsService,
-				private sanitizer:DomSanitizationService,
 				private spotifyService:SpotifyService){
 		
 	}
@@ -251,11 +254,11 @@ export class CheckInComponent implements OnChanges{
 		this.setRandomOfficerName();
 		this.checkForRecentCheckIn();
 		this.settingsService.getShirtSizes()
-			.subscribe((res)=>{
+			.then((res)=>{
 				this.shirtSizes = res;
 				this.shirtSizes.forEach((s, i)=>{
 					let fontSize = (2.5+(i*.41666666));
-					s.fontSize = this.sanitizer.bypassSecurityTrustStyle("font-size:"+ fontSize +"em;");
+					s.fontSize = "font-size:"+ fontSize +"em;";
 				});
 			});
 		// if(navigator.geolocation)
@@ -279,7 +282,7 @@ export class CheckInComponent implements OnChanges{
 		this.submitting = true;
 		this.userCheckIn.event_id = this.currentEventId;
 		this.checkInService.checkEmail(this.userCheckIn.email)
-			.subscribe((checkIn)=>{
+			.then((checkIn)=>{
 				this.submitting = false;
 				
 				if(checkIn){
@@ -304,7 +307,7 @@ export class CheckInComponent implements OnChanges{
 	submitById(){
 		this.submitting = true;
 		this.checkInService.checkInById()
-			.subscribe((checkIn)=>{
+			.then((checkIn)=>{
 				if(checkIn.error){
 					this.checkInStage = eCheckInStage.error;
 
@@ -321,7 +324,7 @@ export class CheckInComponent implements OnChanges{
 	spotifyResponse(response){
 		if(response.addSong){
 			this.spotifyService.addSongSuggestions(this.userCheckIn, response.tracks)
-				.subscribe((res)=>{
+				.then((res)=>{
 					var name = this.userCheckIn.name;
 					let endIndex = name.indexOf(' ');
 					var firstName = (endIndex == -1) ? name : name.slice(0, endIndex);
@@ -341,7 +344,7 @@ export class CheckInComponent implements OnChanges{
 		this.submitting = true;
 
 		this.checkInService.addCheckin(this.userCheckIn)
-			.subscribe((checkIn)=>{
+			.then((checkIn)=>{
 				if(checkIn.error){
 					this.checkInStage = eCheckInStage.error;
 				}else{
@@ -376,7 +379,7 @@ export class CheckInComponent implements OnChanges{
 
 	setRandomOfficerName(){
 		this.settingsService.getOfficerData()
-			.subscribe((res)=>{
+			.then((res)=>{
 				let officerNames = res.officers.officer.map((o)=>{
 					return o.name;
 				});
@@ -387,7 +390,7 @@ export class CheckInComponent implements OnChanges{
 	checkForRecentCheckIn(){
 		if(this.checkInService.checkForRecentCheckIn()){
 			this.checkInService.getCheckInInfo(this.checkInService.checkInId)
-				.subscribe((checkIn)=>{
+				.then((checkIn)=>{
 					if(checkIn){
 						this.userCheckIn = checkIn;
 						this.userCheckIn.event_id = this.currentEventId;

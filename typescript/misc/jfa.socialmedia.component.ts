@@ -10,7 +10,6 @@ import {Component} from '@angular/core';
 				<span class=".cf">@untjfa</span>
 			</div>
 		</div>`,
-  directives: [],
   styleUrls: ["style/css/social-media.css"]
 })
 

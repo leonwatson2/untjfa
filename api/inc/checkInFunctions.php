@@ -183,25 +183,35 @@ function addSpotifySongs(){
 
 function getSpotifySuggestions(){
 	$jfaDb = getDatabaseObject();
-	$tracks = $jfaDb->select(DB_SPOTIFY_SUGGESTIONS, ['checkin_id','spotify_track_id(spotifyId)', 'id']);
+	$tracks = $jfaDb->select(DB_SPOTIFY_SUGGESTIONS,["[>]".DB_CHECKINS => ["id"]],
+		['checkin_id(checkinId)','spotify_track_id(spotifyId)', 'id', DB_CHECKINS.'.name(suggestor)']);
 
 	setResponse(getResponseArray($jfaDb, $tracks, 'tracks'));
 }
-function deleteSpotifySuggestion($id){
+
+function deleteSpotifySuggestion($spotifyIds){
 	$jfaDb = getDatabaseObject();
-	$oldId = $jfaDb->delete(DB_SPOTIFY_SUGGESTIONS,['spotify_track_id'=>$id]);
-	setResponse(getResponseArray($jfaDb, $oldId, 'numberAffected'));
+	$numberAffected = 0;
+	foreach (explode(",",$spotifyIds) as $id) {
+		
+		$oldId = $jfaDb->delete(DB_SPOTIFY_SUGGESTIONS,['spotify_track_id'=>$id]);
+		if($oldId)
+			$numberAffected++;
+	}
+	setResponse(getResponseArray($jfaDb, $numberAffected, 'numberAffected'));
 }
 
 function getCheckIns(){
 	$jfaDb = getDatabaseObject();
 	$columns = getCheckInColumns();
+	echo var_dump($columns);
 	$checkIns = $jfaDb->select(DB_CHECKINS, [
 					"[>]".DB_CHECKIN_INFO => ["id"],
 					"[>]".DB_SHIRT_SIZES => [DB_CHECKIN_INFO.".t_shirt_size"=>"id"]
 					], $columns);
 	foreach ($checkIns as $key => $newCheckin) {
-		$checkIns[$key]['numberOfCheckins'] = $jfaDb->count(DB_CHECKIN_LIST,['checkin_id'=>$newCheckin['id']]);
+		if(isset($newCheckin['id']))
+			$checkIns[$key]['numberOfCheckins'] = $jfaDb->count(DB_CHECKIN_LIST,['checkin_id'=>$newCheckin['id']]);
 	}
 	setResponse(getResponseArray($jfaDb, $checkIns, 'checkIns'));
 }

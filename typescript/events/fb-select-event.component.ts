@@ -1,7 +1,6 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {FacebookService} from '../services';
 
-import {JFADateUtcPipe} from '../pipes';
 
 @Component({
 	selector: 'fb-select-event',
@@ -48,8 +47,6 @@ import {JFADateUtcPipe} from '../pipes';
 				</div>
 			</div>
 			`,
-  directives: [],
-  pipes:[JFADateUtcPipe],
   styleUrls:['style/css/fb-event-list.css', 'style/css/events.css']
 })
 
@@ -73,7 +70,7 @@ export class FbSelectEventComponent{
 			this.events.forEach((a)=>{
 				
 				this.fbService.getEventPicture(a.id)
-					.then(r =>{
+					.then((r:any) =>{
 						a.imageUrl = r.data.url;
 					});
 			});

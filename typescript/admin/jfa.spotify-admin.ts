@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ROUTER_DIRECTIVES, Router} from '@angular/router';
-import {SpotifyAcceptComponent, SpotifyLoginComponent, SpotifyPlaylistComponent, SpotifyListsComponent} from './spotify';
 
 import {SpotifyService} from '../services';
 @Component({
@@ -22,7 +20,6 @@ import {SpotifyService} from '../services';
 				(onUpdate)="updateLists($event)"
 				></spotify-lists>
 			`,
-  directives: [SpotifyAcceptComponent, SpotifyLoginComponent, SpotifyPlaylistComponent, SpotifyListsComponent, ROUTER_DIRECTIVES],
   styleUrls:['style/css/spotify.css']
   
 })
@@ -31,33 +28,36 @@ export class SpotifyAdminComponent {
 	
 	lists;
 	chosenPlaylist:iSpotifyPlaylist;
-	suggestions:iSpotifyTrack[];
-	acceptedSongs:iSpotifyTrack[] = [];
-	pendingSongs:iSpotifyTrack[] = [];
-	deletedSuggestions:iSpotifyTrack[] = [];
+	suggestions:iSpotifySuggestion[];
+	acceptedSongs:iSpotifySuggestion[] = [];
+	pendingSongs:iSpotifySuggestion[] = [];
+	deletedSuggestions:iSpotifySuggestion[] = [];
 
-	chosen = false;
-	constructor(private router:Router,
-				private spotifyService:SpotifyService){}
+	chosen:boolean = false;// set to true if a playlist has been chosen
+	constructor(private spotifyService:SpotifyService){}
 
 	ngOnInit(){
+		if(this.spotifyService.getCurrentPlaylist()){
+			this.chosen = true;
+			this.updateTracks();
+		}
 	}
-	setChosenPlaylist(playlist){
+	setChosenPlaylist(playlist:iSpotifyPlaylist){
 		this.chosen = true;
+		this.spotifyService.setCurrentPlaylist(playlist);
 		this.chosenPlaylist = playlist;
 		this.updateTracks()
 	}
-	updateLists(event){
-		let track = event.track;
+	updateLists(event:{suggestions:iSpotifySuggestion[], addSong:boolean}){
+		let tracks = event.suggestions;
 		if(event.addSong){
-			console.log("Add");
-			this.spotifyService.addTrackToUsersPlaylist(this.chosenPlaylist, track).subscribe();
+			this.spotifyService.addTracksToUsersPlaylist(tracks).then();
 		}else{
-			console.log("Delete");
-			this.spotifyService.deleteSpotifySuggestion(track.id)
-			.subscribe((res)=>{
+			
+			this.spotifyService.deleteSpotifySuggestion(tracks)
+			.then((res)=>{
 				if(res.json().numberAffected){
-					this.deletedSuggestions.push(track);
+					this.deletedSuggestions.push(tracks);
 				}
 			});
 		}
@@ -66,50 +66,64 @@ export class SpotifyAdminComponent {
 	}
 	updateTracks(){
 		this.spotifyService.getSpotifySuggestion()
-			.subscribe((res)=>{
-				if(res.tracks) {
-					var ids = res.tracks.map((t)=>{
-						return t.spotifyId
-					}).join(',');
-					this.spotifyService.getSpotifySongsInformation(ids)
-						.subscribe((res)=>{
-							if(this.suggestions !== res.tracks)
-								this.suggestions = res.tracks;
-							this.filterAcceptedSongs(res.tracks);
+			.then((suggestions:iSpotifySuggestion[])=>{
+				
+				var ids = suggestions.map((suggestion)=>{
+					
+					return suggestion.spotifyId;
+				
+				}).join(',');
+
+				this.spotifyService.getSpotifySongsInformation(ids)
+					.then((res)=>{
+						let suggestionsWithTrackInfo:iSpotifySuggestion[] = suggestions.map((suggestion, i)=>{
+							suggestion.track = res.tracks[i];
+							return suggestion
 						})
-				}
+						if(this.suggestions !== suggestionsWithTrackInfo)
+							this.suggestions = suggestionsWithTrackInfo;
+						this.filterAcceptedSongs(suggestionsWithTrackInfo);
+					})
 				
 			});
 	}
 
-	filterAcceptedSongs(suggestions){
-		var suggestionIds = suggestions.map((suggestion)=>suggestion.id)
+
+	filterAcceptedSongs(suggestions:iSpotifySuggestion[]){
+		var suggestionIds = suggestions.map((suggestion,i)=>{
+			return suggestion.spotifyId
+		})
+		var completePlaylist:iSpotifySuggestion[] = []
+		this.acceptedSongs = []
+		this.pendingSongs = []
 		this.spotifyService
-			.getPlaylistTracks(this.chosenPlaylist)
-			.subscribe((res)=>{
-				res.items.forEach((item)=>{
-					if(suggestionIds.includes(item.track.id)){
-						this.acceptedSongs.push(item.track);
-					}
+			.getPlaylistTracks()
+			.then((res)=>{
+
+				var playlistIds = res.items.map((item)=>item.track.id)
+				suggestionIds.forEach((suggestion, i)=>{
+					if(playlistIds.includes(suggestion))
+						this.acceptedSongs.push(suggestions[i])
+					else
+						this.pendingSongs.push(suggestions[i])
 				})
-				this.pendingSongs = this.suggestions.filter((song)=>{
-					return !this.acceptedSongs.map((song)=>{return song.id}).includes(song.id)
-				})
-				console.log(suggestions);
+
+				completePlaylist = res.items.map((i)=>{return {track:i.track}});
+
 				this.lists = [
 					{
-						"name":"Suggested Songs",
+						"name":"Pending Suggestions",
 						"data":this.pendingSongs,
 						"isPending":true
 					},
 					{
-						"name":"Accepted Songs",
+						"name":"Accepted Suggestions",
 						"data":this.acceptedSongs,
 						"isPending":false
 					},
 					{
 						"name":"Full Playlist",
-						"data":res.items.map((i)=>{return i.track}),
+						"data":completePlaylist,
 						"isPending":false
 					}
 				]
@@ -121,7 +135,7 @@ export class SpotifyAdminComponent {
 		// TODO: Change so CHeckInId is also restored
 		if(this.deletedSuggestions.length > 0){
 			let track = this.deletedSuggestions.pop();
-			this.spotifyServicee.addSongSuggestions({id:4}, track);
+			this.spotifyService.addSongSuggestions({id:4}, track);
 			this.updateTracks();
 		}
 	}

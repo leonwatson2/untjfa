@@ -5,8 +5,7 @@ import {Component, Input} from '@angular/core';
 	template: `
 			<span *ngIf="booleanVariable">{{tWord}}</span>
 			<span *ngIf="!booleanVariable">{{fWord}}</span>
-			`,
-  directives: [],
+			`
 })
 
 export class BooleanWordComponent {

@@ -1,8 +1,6 @@
 import {Component} from '@angular/core';
 import {CheckInListComponent} from './jfa.checkin-list.component';
-import {CheckInListAllComponent} from './';
 import {EventsService} from '../services';
-import {JFADatePipe, JFAEventTypePipe} from '../pipes';
 
 
 import {JfaEvent, JfaEventGroup, DefinedEvent} from '../classes/Event';
@@ -30,8 +28,7 @@ import {JfaEvent, JfaEventGroup, DefinedEvent} from '../classes/Event';
 		</div>
 			<checkin-list class="main" *ngIf="eventChosen" [event]="chosenEvent"></checkin-list>
 			`,
-  directives: [CheckInListComponent, CheckInListAllComponent],
-  pipes:[JFADatePipe, JFAEventTypePipe],
+
   styleUrls:['style/css/checkin-list.css']
 })
 
@@ -51,7 +48,7 @@ export class CheckInListingsComponent {
 	}
 
 	updateEvents(){
-	    this.eventsService.getEvents().subscribe((events) => {
+	    this.eventsService.getEvents().then((events) => {
 	      
 	      let oldEvents = this.eventsService.getOldEvents(events);
 	      let curEvents = this.eventsService.getCurrentEvents(events);

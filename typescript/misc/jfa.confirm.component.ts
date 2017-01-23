@@ -12,7 +12,6 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 				</div>
 			</div>
 			`,
-  directives: [],
   styleUrls:['style/css/confirm-modal.css']
 })
 

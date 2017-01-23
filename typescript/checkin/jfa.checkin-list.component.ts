@@ -1,9 +1,7 @@
 import {Component, Input, OnChanges, OnDestroy} from '@angular/core';
 
 import {CheckInService} from '../services';
-import {JFAEventTypePipe} from '../pipes';
 
-import {DisplayMemberInfoComponent} from './';
 import {DefinedEvent} from '../classes/Event';
 
 
@@ -24,15 +22,13 @@ import * as moment from 'moment'
 
 		</div>
 			`,
-  directives: [DisplayMemberInfoComponent],
-  pipes:[JFAEventTypePipe],
   styleUrls:['style/css/checkin-board.css', 'style/css/checkin-list.css']
 })
 
 export class CheckInListComponent implements OnChanges, OnDestroy{
 	@Input() event:DefinedEvent;
  
-	checkIns:any[];
+	checkIns:any[] | {error:string, message:string};
   autoRefresh;
   private title;
   constructor(private checkInService:CheckInService){
@@ -70,7 +66,7 @@ export class CheckInListComponent implements OnChanges, OnDestroy{
   }
   updateCheckIns(){
     this.checkInService.getEventCheckInInfo(this.event,["name", "student_id", "t_shirt_size"])
-                      .subscribe(res =>{
+                      .then(res =>{
                         this.checkIns = res;
                       });
 

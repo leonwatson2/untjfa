@@ -12,7 +12,6 @@ import {Component} from '@angular/core';
 				<h4>Checkins</h4>
 			</div>
 			`,
-  directives: [],
 })
 
 export class CheckInsComponent {

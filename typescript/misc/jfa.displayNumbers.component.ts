@@ -9,7 +9,6 @@ import {Component, Input} from '@angular/core';
 			<h2 class="big-number">{{numberOfSignups}}</h2>
 		</div>
 	`,
-  directives: [],
   styleUrls:['style/css/signup.css']
   
 })

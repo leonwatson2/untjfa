@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {CheckInService} from '../services';
-import {MemberInfoComponent} from './';
 
 
 @Component({
@@ -21,7 +20,6 @@ import {MemberInfoComponent} from './';
 	
 			
 			`,
-  directives: [MemberInfoComponent],
   styleUrls:['style/css/checkin-board.css', 'style/css/checkin-list.css']
 
 })
@@ -33,7 +31,7 @@ export class CheckInListAllComponent {
 
 	ngOnInit(){
 		this.checkinService.getCheckInInfo()
-			.subscribe((res)=>{
+			.then((res)=>{
 				this.members = res;
 			});
 	}

@@ -54,7 +54,6 @@ interface Email{
 		  	<input type="password" name="pass" [(ngModel)]="emailPass"/>
 	</form>
 			`,
-  directives: [LoadingComponent],
 })
 
 export class EmailComponent {
@@ -95,7 +94,7 @@ export class EmailComponent {
 		console.log(this.email);
 		if(this.emailPass == "meangreen12")
 		this.emailService.sendEmail(this.email)
-			.subscribe((res)=>{
+			.then((res)=>{
 				this.sendingEmails = false;
 			});
 	}

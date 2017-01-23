@@ -1,6 +1,4 @@
 import {Component, Input, ElementRef} from '@angular/core';
-import {DisplayMemberInfoComponent} from './jfa.display-member-info.component';
-import {MemberInfoFormComponent} from '../forms/jfa.forms';
 import {CheckInService, HeroService} from '../services';
 
 @Component({
@@ -9,7 +7,6 @@ import {CheckInService, HeroService} from '../services';
 			<display-member-info *ngIf="member && !editing" (click)="toggleEditing(true)" [checkIn]="member"></display-member-info>
 			<edit-member-info *ngIf="editing" (update)="updateMemberInfo($event)" (cancel)="toggleEditing(false)" [member]="member"></edit-member-info>
 			`,
-  directives: [DisplayMemberInfoComponent, MemberInfoFormComponent],
   styleUrls:['style/css/checkin-list.css']
 })
 

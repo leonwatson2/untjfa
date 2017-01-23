@@ -122,3 +122,10 @@ declare interface iSpotifyTrackLink{
 	uri:string
 }
 
+declare interface iSpotifySuggestion{
+	id?:number
+	checkinId?:number
+	spotifyId?:string
+	track?:iSpotifyTrack
+	suggestor?:string
+}

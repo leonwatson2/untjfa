@@ -4,17 +4,18 @@ import {Component, Input} from '@angular/core';
 	selector: 'user-photo-name',
 	template: `
 			<div class="img">
+			Img
 				<img [src]="info.imageUrl" [alt]="info.name" />
 			</div>
 			<div class="name">
 				<span [innerHtml]="info.name"></span>
 			</div>
-			`,
-  directives: [],
+			`
 })
 
 export class PhotoNameComponent {
 	@Input() info;
+
 
 }
 

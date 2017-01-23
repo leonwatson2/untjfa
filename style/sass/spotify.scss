@@ -11,14 +11,16 @@
 		@include flex-wrap(wrap);
 }
 
-.playlist{
+.playlist,.suggestion{
   width: 10%;
+
   .photo{
     width: 100%;
     img{
       width: 100%;
     }
   }
+
   .choose{
     @include transition(.4s ease-out);
     color:white;
@@ -34,17 +36,112 @@
 }
 
 .suggestion{
-  width: 100%;
-  margin: 10px 0;
-  background:white;
-  padding: 10px 0;	
-  box-shadow: 0 5px 10px rgba(0,0,0,.25);
+  
   .confirm,.deny{
-	@include flex-grow(1);
+	   @include flex-grow(1);
   }
   @include MQ(M){
   	width: 25%;
+    &.hover{
+     width: 100%; 
+    }
   }
+}
+$suggestion-pane-height:500px;
+$side-panel-length:25%;
+#suggestion-pane{
+    @include display(flex);
+    @include flex-direction(row);
+    @include align-items(flex-start);
+    @include align-content(flex-start);
+    @include justify-content(space-around);
+    @include flex-wrap(none);
+    .side-panel{
+      display: none;
+      border:solid 1px #ddd;
+      border-width: 1px 0;
+      height: $suggestion-pane-height;
+      .suggestor, 
+      .track-name, 
+      .album-name,
+      .artist-name,
+      .album-cover{
+        padding: 5px;
+        text-align: center;
+      }
+    }
+    .table-container{
+      width: 100%;
+    }
+    .table, thead, tbody{
+      display: block;
+      width: 100%;
+    }
+    td{
+      height:80px;
+      white-space: nowrap;
+      text-overflow:ellipsis;
+    }
+    $table-column-widths:(3%:1, 40%:2, 37%:3, 20%:4);
+    @each $width,$num in $table-column-widths{
+      th:nth-of-type(#{$num}),
+      td:nth-of-type(#{$num}){
+        width: $width;
+      }
+    }
+    @include MQ(M){
+  
+      .side-panel{
+        display: block;
+        width: $side-panel-length;
+        .album-cover{
+          width: 100%;
+          img{
+            width: 100%;
+          }
+        }
+      }
+      .table-container{
+        width: (100% - $side-panel-length);
+        height: $suggestion-pane-height;
+      }
+      .table{
+        width: 100%;
+        height: 100%; 
+        tbody{
+          overflow-y: scroll;
+          height: 100%;
+        }
+        tr:hover{
+          background:transparentize($brand-primary,.3);
+        }
+      }
+    }
+}
+
+.edit-buttons{
+    @include display(flex);
+    @include flex-direction(row);
+    @include align-items(center);
+    @include align-content(center);
+    @include justify-content(space-between);
+    @include flex-wrap(none);
+    button{
+     @include flex-grow(1);
+     min-width: 50px;
+     color: #efe;
+     font-size: 1.3em;
+    }
+    .edit{
+      background: $brand-info;
+      
+      &:hover{
+      background: transparentize($brand-info, .5)
+      }
+    }
+    .confirm.active{
+      opacity:.65;
+    }
 }
 
 .spotify-login-btn{
