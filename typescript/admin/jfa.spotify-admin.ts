@@ -1,25 +1,17 @@
 import {Component, OnInit} from '@angular/core';
+import {ROUTER_DIRECTIVES, Router} from '@angular/router';
+import {SpotifyAcceptComponent, SpotifyLoginComponent, SpotifyPlaylistComponent} from './spotify';
 
 import {SpotifyService} from '../services';
 @Component({
 	selector: 'jfa-spotify-admin',
 	template: `
-			<div>
-				<button *ngIf="spotifyService.isLoggedIn && chosen" (click)="chosen=false">Change Playlist</button>
-			</div>
-			<spotify-login class="spotify-login" *ngIf="!spotifyService.isLoggedIn"></spotify-login>
-			
-			<spotify-playlist 
-				*ngIf="spotifyService.isLoggedIn && !chosen"
-				(chosen)="setChosenPlaylist($event)" 
-				></spotify-playlist>
-			
-			<spotify-lists 
-				*ngIf="spotifyService.isLoggedIn && chosen" 
-				[lists]="lists"
-				(onUpdate)="updateLists($event)"
-				></spotify-lists>
+			<spotify-login class="spotify-login"></spotify-login>
+			<spotify-playlist (chosen)="setChosenPlaylist($event)" *ngIf="spotifyService.isLoggedIn && !chosen"></spotify-playlist>
+			<spotify-accept *ngIf="chosen" [chosenPlaylist]="chosenPlaylist"></spotify-accept>
+
 			`,
+  directives: [SpotifyAcceptComponent, SpotifyLoginComponent, SpotifyPlaylistComponent, ROUTER_DIRECTIVES],
   styleUrls:['style/css/spotify.css']
   
 })
@@ -35,7 +27,7 @@ export class SpotifyAdminComponent {
 
 	chosen:boolean = false;// set to true if a playlist has been chosen
 	constructor(private spotifyService:SpotifyService){}
-
+	
 	ngOnInit(){
 		if(this.spotifyService.getCurrentPlaylist()){
 			this.chosen = true;
@@ -139,6 +131,4 @@ export class SpotifyAdminComponent {
 			this.updateTracks();
 		}
 	}
-
-
 }
